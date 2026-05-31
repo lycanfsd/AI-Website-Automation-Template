@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #ffffff;
+  color: #17211d;
+}
+
+::selection {
+  background: #d5f8e5;
+  color: #0b352a;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+@layer components {
+  .legal-copy {
+    display: grid;
+    gap: 1rem;
+    color: #3f3f46;
+    font-size: 1rem;
+    line-height: 1.75rem;
+  }
+
+  .legal-copy h2 {
+    margin-top: 1.5rem;
+    color: #17211d;
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.75rem;
+  }
+}
