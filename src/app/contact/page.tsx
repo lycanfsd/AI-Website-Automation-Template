@@ -48,9 +48,10 @@ export default function ContactPage() {
                 );
               })}
             </div>
+            {/* TODO: Replace demo contact details, office hours, and service area for each client launch. */}
             <p className="mt-6 text-sm leading-6 text-zinc-600">
-              TODO: Replace demo contact details, office hours, service area, and
-              form destination for the client before launch.
+              New inquiries are reviewed by the PeakForm team and answered with
+              the best next step for your goals.
             </p>
           </div>
 

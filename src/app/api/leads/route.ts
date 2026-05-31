@@ -1,0 +1,77 @@
+import { NextResponse } from "next/server";
+import { sendLeadEmails } from "@/lib/lead-email";
+import { validateLeadSubmission } from "@/lib/lead-validation";
+import { getLeadStorageError, saveLeadToSupabase } from "@/lib/supabase-leads";
+
+export async function POST(request: Request) {
+  let body: unknown;
+
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json(
+      { ok: false, errors: { form: "Invalid submission format." } },
+      { status: 400 },
+    );
+  }
+
+  const validation = validateLeadSubmission(body);
+
+  if (!validation.ok) {
+    return NextResponse.json(
+      { ok: false, errors: validation.errors },
+      { status: 400 },
+    );
+  }
+
+  if (validation.isSpam) {
+    return NextResponse.json({
+      ok: true,
+      message: "Thanks. Your request has been received.",
+    });
+  }
+
+  try {
+    const result = await saveLeadToSupabase(validation.data);
+
+    if (!result.duplicate) {
+      try {
+        await sendLeadEmails({
+          lead: validation.data,
+          submittedAt: result.lead.created_at,
+          leadId: result.lead.id,
+        });
+      } catch (emailError) {
+        const message =
+          emailError instanceof Error ? emailError.message : "Unknown email error";
+        console.error("Lead email notification failed after save", message);
+      }
+    }
+
+    return NextResponse.json({
+      ok: true,
+      duplicate: result.duplicate,
+      message: result.duplicate
+        ? "Thanks. Your consultation request has already been received."
+        : "Thanks. Your consultation request has been received, and PeakForm will follow up soon.",
+      leadId: result.lead.id,
+    });
+  } catch (error) {
+    const storageError = getLeadStorageError(error);
+
+    console.error("Lead storage error", storageError.message);
+
+    return NextResponse.json(
+      {
+        ok: false,
+        errors: {
+          form:
+            storageError.status === 503
+              ? "Lead storage is not configured yet. Please contact the business directly."
+              : "We could not save your request right now. Please try again or contact us directly.",
+        },
+      },
+      { status: storageError.status },
+    );
+  }
+}

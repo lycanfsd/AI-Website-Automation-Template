@@ -379,7 +379,7 @@ export default function HomePage() {
           </div>
           <div className="rounded-lg bg-white p-5 text-ink shadow-soft sm:p-6">
             {/* TODO: Connect this homepage lead form to each client's CRM or booking workflow. */}
-            <BookingForm />
+            <BookingForm sourcePage="homepage-final-cta" />
           </div>
         </div>
       </section>
