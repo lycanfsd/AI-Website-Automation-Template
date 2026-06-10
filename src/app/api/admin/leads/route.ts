@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import { getAdminLeadError, fetchLeadsFromSupabase } from "@/lib/supabase-admin-leads";
 
+export const runtime = "nodejs";
+
 export async function GET() {
-  // TODO: Protect this route with real authentication before any client deployment.
+  // TODO: Replace starter password auth with role-based auth before larger client deployments.
   try {
     const leads = await fetchLeadsFromSupabase();
 

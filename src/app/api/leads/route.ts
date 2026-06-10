@@ -4,6 +4,8 @@ import { sendLeadEmails } from "@/lib/lead-email";
 import { validateLeadSubmission } from "@/lib/lead-validation";
 import { getLeadStorageError, saveLeadToSupabase } from "@/lib/supabase-leads";
 
+export const runtime = "nodejs";
+
 export async function POST(request: Request) {
   let body: unknown;
 

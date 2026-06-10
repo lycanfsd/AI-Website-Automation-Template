@@ -350,7 +350,8 @@ export function LeadFollowUpTool() {
             />
             Review and edit before sending. This draft should not promise
             specific health outcomes, weight loss, pain relief, or guaranteed
-            results.
+            results. Drafts are not medical advice, legal advice, or a
+            substitute for the business owner&apos;s judgment.
           </p>
         </div>
       </div>

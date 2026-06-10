@@ -334,6 +334,8 @@ export function ReviewResponseTool() {
             This tool only drafts responses. It does not automatically post to
             Google, Yelp, Instagram, or any third-party platform. Always review
             the message for accuracy, privacy, and tone before posting manually.
+            Drafts are not legal advice, medical advice, or a substitute for the
+            business owner&apos;s judgment.
           </p>
         </div>
       </div>

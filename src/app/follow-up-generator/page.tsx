@@ -28,7 +28,9 @@ export default function LeadFollowUpPage() {
           <p className="mt-6 text-sm leading-6 text-zinc-500">
             TODO: Pull real lead context from the CRM and log owner-approved
             messages back to the lead record. Keep sending manual unless a
-            client explicitly approves a messaging integration.
+            client explicitly approves a messaging integration. Confirm legal,
+            medical, privacy, and regulated-service language with the client
+            before use.
           </p>
         </div>
       </section>

@@ -13,6 +13,8 @@ type LoginPayload = {
   next?: unknown;
 };
 
+export const runtime = "nodejs";
+
 export async function POST(request: NextRequest) {
   if (!isAdminPasswordConfigured()) {
     return NextResponse.json(

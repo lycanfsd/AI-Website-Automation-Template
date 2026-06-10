@@ -28,7 +28,9 @@ export default function ReviewResponsePage() {
           <p className="mt-6 text-sm leading-6 text-zinc-500">
             TODO: Review the prompt and model settings for each client before
             launch. Keep review publishing manual; do not automatically post
-            generated responses to third-party platforms.
+            generated responses to third-party platforms. Confirm legal,
+            medical, privacy, and regulated-service language with the client
+            before use.
           </p>
         </div>
       </section>

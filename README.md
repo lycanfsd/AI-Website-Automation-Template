@@ -77,6 +77,101 @@ OPENAI_FOLLOW_UP_MODEL="gpt-5.4-mini"
 
 `OPENAI_API_KEY` is server-only and powers the Review Response Generator through `/api/review-response` and the Lead Follow-up Generator through `/api/lead-follow-up`. Do not prefix it with `NEXT_PUBLIC_` or expose it in browser code. `OPENAI_REVIEW_MODEL` and `OPENAI_FOLLOW_UP_MODEL` are optional; both routes default to `gpt-5.4-mini` as a cost-conscious model choice for short drafting tasks.
 
+## Vercel Deployment
+
+This project is ready for Vercel as a standard Next.js App Router deployment. No `vercel.json` is required.
+
+Before deploying:
+
+1. Run `npm run lint` and `npm run build` locally.
+2. Confirm `.env.local` is not committed. Local env files are ignored by `.gitignore`.
+3. Replace or approve demo copy in `src/config/client.ts` and `src/config/client-presets.ts`.
+4. Run `supabase/schema.sql` in the client's Supabase project if lead capture will be live.
+5. Verify any Resend sending domain before enabling owner or lead confirmation emails.
+6. Choose a strong `ADMIN_PASSWORD` and a separate long random `ADMIN_SESSION_SECRET`.
+
+Vercel project setup:
+
+1. Push the repository to GitHub, GitLab, or Bitbucket.
+2. In Vercel, choose **Add New Project** and import the repository.
+3. Keep the framework preset as **Next.js**.
+4. Use the default install command, or set it to `npm install`.
+5. Use `npm run build` as the build command.
+6. Leave the output directory blank so Vercel uses Next.js defaults.
+7. Add the environment variables below in **Project Settings > Environment Variables** for Production, Preview, and Development as needed.
+8. Deploy, then redeploy after changing environment variables.
+
+Recommended Vercel environment variables:
+
+```bash
+NEXT_PUBLIC_CLIENT_BUSINESS_NAME="Client Business Name"
+NEXT_PUBLIC_CLIENT_PHONE="(555) 000-0000"
+NEXT_PUBLIC_CLIENT_EMAIL="hello@clientdomain.com"
+NEXT_PUBLIC_CLIENT_ADDRESS="Client address or service area"
+NEXT_PUBLIC_SITE_URL="https://www.clientdomain.com"
+NEXT_PUBLIC_BOOKING_URL=""
+ADMIN_PASSWORD="use-a-strong-password"
+ADMIN_SESSION_SECRET="use-a-long-random-secret"
+SUPABASE_URL="https://your-project.supabase.co"
+SUPABASE_SERVICE_ROLE_KEY="server-only-service-role-key"
+NEXT_PUBLIC_SUPABASE_ANON_KEY=""
+RESEND_API_KEY="server-only-resend-key"
+LEAD_NOTIFICATION_FROM_EMAIL="Client Name <leads@clientdomain.com>"
+LEAD_NOTIFICATION_TO_EMAIL="owner@clientdomain.com"
+LEAD_CONFIRMATION_EMAIL_ENABLED="false"
+OPENAI_API_KEY="server-only-openai-key"
+OPENAI_REVIEW_MODEL="gpt-5.4-mini"
+OPENAI_FOLLOW_UP_MODEL="gpt-5.4-mini"
+```
+
+Only variables prefixed with `NEXT_PUBLIC_` are intended for browser exposure. Keep `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, and `OPENAI_API_KEY` server-only in Vercel. Do not paste real secrets into `.env.example`, README files, screenshots, issue comments, or client-facing docs.
+
+Production URL configuration:
+
+- Set `NEXT_PUBLIC_SITE_URL` to the final Vercel or custom domain, including `https://`.
+- This value controls canonical URLs, Open Graph URLs, `sitemap.xml`, `robots.txt`, and local business schema.
+- If Vercel preview deployments show the production domain in metadata, that is expected when `NEXT_PUBLIC_SITE_URL` is set to the production URL.
+- There are no hardcoded localhost URLs in the app code. `localhost` appears only in local development instructions.
+
+Post-deployment smoke test:
+
+- Open `/`, `/services`, `/contact`, `/privacy`, and `/terms`.
+- Open `/sitemap.xml` and confirm URLs use the configured production domain.
+- Open `/robots.txt` and confirm admin, tool, and API routes are disallowed.
+- Submit a test lead from `/contact` and confirm it appears in Supabase.
+- Confirm owner email notification behavior if Resend is configured.
+- Open `/dashboard` while logged out and confirm it redirects to `/admin-login`.
+- Log in with `ADMIN_PASSWORD`, then confirm `/dashboard`, `/review-generator`, `/follow-up-generator`, and `/settings` load.
+- Generate one review response and one lead follow-up if `OPENAI_API_KEY` is configured.
+- Click **Log out** and confirm protected pages redirect again.
+
+Admin and API deployment notes:
+
+- Admin pages are protected by middleware: `/dashboard`, `/review-generator`, `/follow-up-generator`, `/settings`, and legacy admin/tool redirects.
+- Admin API routes and AI generator routes are also protected by middleware.
+- Public lead submission uses `/api/leads`, validates on the server, stores through the Supabase service role key, and does not expose that key to the browser.
+- AI routes call OpenAI from server route handlers only. The browser sends form input to the app API route, not directly to OpenAI.
+
+Demo data safety:
+
+- PeakForm Coaching is fictional demo data.
+- Demo phone numbers, emails, testimonials, and URLs are placeholders.
+- Replace demo business details, testimonials, FAQs, legal copy, service claims, and social links before launching a real client.
+- The template does not include real secrets. Keep production secrets in Vercel environment variables.
+
+## Vercel Troubleshooting
+
+- **Build fails on Vercel:** run `npm run build` locally, commit the fix, and redeploy. Confirm dependencies are installed from `package-lock.json`.
+- **Metadata, sitemap, or share previews show the wrong domain:** set `NEXT_PUBLIC_SITE_URL` to the real production URL and redeploy.
+- **Lead form says storage is not configured:** add `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` in Vercel, run `supabase/schema.sql`, and redeploy.
+- **Leads save but emails do not send:** configure `RESEND_API_KEY`, `LEAD_NOTIFICATION_FROM_EMAIL`, and `LEAD_NOTIFICATION_TO_EMAIL`. Verify the sending domain in Resend.
+- **Admin login says it is not configured:** add `ADMIN_PASSWORD` and redeploy. Add `ADMIN_SESSION_SECRET` for a separate cookie signing secret.
+- **Admin pages redirect unexpectedly after deploy:** confirm cookies are allowed, the site is served over HTTPS, and `ADMIN_SESSION_SECRET` did not change between deploy attempts.
+- **AI generators show a configuration error:** add `OPENAI_API_KEY` as a server-only Vercel environment variable and redeploy.
+- **AI generators return rate-limit errors:** wait and retry, or adjust OpenAI project limits and usage controls.
+- **A server secret appears in browser code:** remove any `NEXT_PUBLIC_` prefix from server-only secrets, rotate the exposed secret, and redeploy.
+- **A route works locally but not in production:** check Vercel Function logs for the specific API route and confirm the matching environment variables are set for the environment you deployed.
+
 ## Client Customization
 
 Edit [src/config/client.ts](src/config/client.ts) first when adapting the template for a new business. It contains the main reusable client settings:
@@ -127,6 +222,20 @@ Customize these for each client before launch:
 - Review regulated wellness, medical, nutrition, chiropractic, med spa, and physical therapy claims with the client and qualified counsel.
 
 After deployment, submit the generated sitemap URL, for example `https://clientdomain.com/sitemap.xml`, to the client's preferred search console tools.
+
+## Policy and Disclaimer Review
+
+The privacy policy, terms/disclaimer page, and AI tool notices are starter templates. They are meant to explain common lead capture and AI draft workflows in plain English, not to provide legal advice.
+
+Before launching for any client:
+
+- Review [src/app/privacy/page.tsx](src/app/privacy/page.tsx) with the client and qualified counsel.
+- Review [src/app/terms/page.tsx](src/app/terms/page.tsx) with the client and qualified counsel.
+- Confirm the policy names the client's actual lead data, contact methods, third-party providers, AI usage, data retention, and privacy contact method.
+- Confirm the terms/disclaimer match the client's actual services, credentials, payment terms, cancellation policy, and local rules.
+- Make sure all AI-generated review responses and lead follow-ups are treated as drafts only.
+- Remind the client that the template does not guarantee leads, sales, bookings, reviews, weight loss, health outcomes, pain relief, or fitness results.
+- For med spas, chiropractors, physical therapy clinics, nutrition coaches, and other regulated services, confirm medical, health, aesthetic, and advertising claims with qualified professionals before launch.
 
 ## Niche Presets
 
@@ -186,7 +295,8 @@ Prompt guardrails:
 - 5-star reviews should sound warm, grateful, and lightly personalized.
 - 3-4 star reviews should acknowledge the feedback and invite the customer back.
 - 1-2 star reviews should be apologetic, calm, non-argumentative, and invite direct offline contact.
-- Drafts should avoid fake claims, legal liability admissions, medical claims, diagnoses, guaranteed outcomes, and specific weight loss or health promises.
+- Drafts should avoid fake claims, legal advice, legal liability admissions, medical advice, medical claims, diagnoses, guaranteed outcomes, and specific weight loss or health promises.
+- Drafts are suggestions only. The business owner is responsible for reviewing, editing, approving, and manually sending or posting them.
 - The tool only drafts text. It does not post to Google, Yelp, Instagram, or any third-party platform.
 
 Review response testing examples:
@@ -301,7 +411,7 @@ The owner notification includes lead name, email, phone, preferred service, goal
 - Configure Resend sender, owner inbox, and optional lead confirmation email
 - Configure `OPENAI_API_KEY` for the Review Response and Lead Follow-up generators
 - Configure `ADMIN_PASSWORD` for demos, then replace starter auth before larger client deployments
-- Review `src/app/privacy/page.tsx` and `src/app/terms/page.tsx` with legal counsel for each client
+- Review `src/app/privacy/page.tsx`, `src/app/terms/page.tsx`, and AI tool disclaimers with the client and qualified counsel before launch
 
 ## Routes
 

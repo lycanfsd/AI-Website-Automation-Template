@@ -9,8 +9,10 @@ type RouteContext = {
   params: Promise<{ id: string }>;
 };
 
+export const runtime = "nodejs";
+
 export async function PATCH(request: Request, context: RouteContext) {
-  // TODO: Protect this route with real authentication before any client deployment.
+  // TODO: Replace starter password auth with role-based auth before larger client deployments.
   const { id } = await context.params;
   let body: unknown;
 
