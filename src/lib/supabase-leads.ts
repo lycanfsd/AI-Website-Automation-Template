@@ -29,6 +29,7 @@ class SupabaseLeadError extends Error {
   constructor(
     message: string,
     public status = 500,
+    public exposeToClient = false,
   ) {
     super(message);
   }
@@ -42,6 +43,7 @@ function getSupabaseConfig() {
     throw new SupabaseLeadError(
       "Lead storage is not configured. Add SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY on the server.",
       503,
+      true,
     );
   }
 
@@ -151,12 +153,19 @@ export function getLeadStorageError(error: unknown) {
   if (error instanceof SupabaseLeadError) {
     return {
       status: error.status,
-      message: error.message,
+      message: error.exposeToClient
+        ? error.message
+        : "Unable to save the lead right now.",
+      logMessage: error.message,
     };
   }
 
   return {
     status: 500,
     message: "Unable to save the lead right now.",
+    logMessage:
+      error instanceof Error
+        ? `${error.name}: ${error.message}`
+        : "Unknown lead storage error.",
   };
 }

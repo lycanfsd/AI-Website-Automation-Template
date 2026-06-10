@@ -28,13 +28,13 @@ export function ButtonLink({
     <Link
       href={href}
       className={cx(
-        "inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
+        "inline-flex min-h-12 min-w-0 items-center justify-center gap-2 rounded-full px-5 py-3 text-center text-sm font-semibold leading-5 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
         variants[variant],
         className,
       )}
     >
-      <span>{children}</span>
-      <ArrowRight aria-hidden="true" className="size-4" />
+      <span className="min-w-0">{children}</span>
+      <ArrowRight aria-hidden="true" className="size-4 shrink-0" />
     </Link>
   );
 }

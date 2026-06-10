@@ -8,7 +8,12 @@ import {
   useState,
 } from "react";
 import {
+  emailMaxCharacters,
+  fullNameMaxCharacters,
+  leadMessageMaxCharacters,
+  phoneMaxCharacters,
   preferredServiceOptions,
+  primaryGoalMaxCharacters,
   timelineOptions,
   type LeadFormData,
   type LeadValidationErrors,
@@ -158,7 +163,7 @@ export function BookingForm({ sourcePage = "contact" }: { sourcePage?: string })
   }
 
   return (
-    <form className="grid gap-4" onSubmit={handleSubmit} noValidate>
+    <form className="grid gap-4 sm:gap-5" onSubmit={handleSubmit} noValidate>
       <div className="grid gap-2">
         <h2 className="text-xl font-semibold text-ink">{siteConfig.primaryCta}</h2>
         <p className="text-sm leading-6 text-zinc-600">
@@ -194,6 +199,7 @@ export function BookingForm({ sourcePage = "contact" }: { sourcePage?: string })
               value={formData.fullName}
               onChange={handleTextChange}
               autoComplete="name"
+              maxLength={fullNameMaxCharacters}
               aria-invalid={Boolean(errors.fullName)}
               aria-describedby={errors.fullName ? fieldDescriptionId("fullName") : undefined}
             />
@@ -212,6 +218,7 @@ export function BookingForm({ sourcePage = "contact" }: { sourcePage?: string })
               onChange={handleTextChange}
               autoComplete="tel"
               inputMode="tel"
+              maxLength={phoneMaxCharacters}
               aria-invalid={Boolean(errors.phone)}
               aria-describedby={errors.phone ? fieldDescriptionId("phone") : undefined}
             />
@@ -232,6 +239,7 @@ export function BookingForm({ sourcePage = "contact" }: { sourcePage?: string })
             onChange={handleTextChange}
             autoComplete="email"
             inputMode="email"
+            maxLength={emailMaxCharacters}
             aria-invalid={Boolean(errors.email)}
             aria-describedby={errors.email ? fieldDescriptionId("email") : undefined}
           />
@@ -314,6 +322,7 @@ export function BookingForm({ sourcePage = "contact" }: { sourcePage?: string })
             placeholder="Example: build strength, improve mobility, lose body fat, or feel more consistent."
             value={formData.primaryGoal}
             onChange={handleTextChange}
+            maxLength={primaryGoalMaxCharacters}
             aria-invalid={Boolean(errors.primaryGoal)}
             aria-describedby={
               errors.primaryGoal ? fieldDescriptionId("primaryGoal") : undefined
@@ -335,6 +344,7 @@ export function BookingForm({ sourcePage = "contact" }: { sourcePage?: string })
             placeholder="Anything else we should know before reaching out?"
             value={formData.message}
             onChange={handleTextChange}
+            maxLength={leadMessageMaxCharacters}
             aria-invalid={Boolean(errors.message)}
             aria-describedby={errors.message ? fieldDescriptionId("message") : undefined}
           />
@@ -344,13 +354,13 @@ export function BookingForm({ sourcePage = "contact" }: { sourcePage?: string })
       <input type="hidden" name="sourcePage" value={formData.sourcePage} readOnly />
 
       <div className="grid gap-2">
-        <label className="flex items-start gap-3 rounded-lg border border-zinc-200 bg-zinc-50 p-4 text-sm leading-6 text-zinc-700">
+        <label className="flex min-h-14 items-start gap-3 rounded-lg border border-zinc-200 bg-zinc-50 p-4 text-sm leading-6 text-zinc-700">
           <input
             type="checkbox"
             name="consent"
             checked={formData.consent}
             onChange={(event) => updateField("consent", event.target.checked)}
-            className="mt-1 size-4 rounded border-zinc-300 text-brand-600 focus:ring-brand-600"
+            className="mt-0.5 size-5 shrink-0 rounded border-zinc-300 text-brand-600 focus:ring-brand-600"
             aria-invalid={Boolean(errors.consent)}
             aria-describedby={errors.consent ? fieldDescriptionId("consent") : undefined}
           />
@@ -388,7 +398,7 @@ export function BookingForm({ sourcePage = "contact" }: { sourcePage?: string })
       <button
         type="submit"
         disabled={isSubmitting}
-        className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-brand-600 px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 disabled:cursor-not-allowed disabled:opacity-70"
+        className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-brand-600 px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
       >
         {isSubmitting ? (
           <LoaderCircle aria-hidden="true" className="size-4 animate-spin" />

@@ -61,19 +61,22 @@ export function AdminLoginForm({ nextPath }: AdminLoginFormProps) {
           autoComplete="current-password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
-          className="min-h-11 flex-1 rounded-r-lg border-0 bg-transparent px-3 py-2 text-sm text-ink outline-none"
+          className="min-h-12 flex-1 rounded-r-lg border-0 bg-transparent px-3 py-3 text-sm text-ink outline-none"
           required
         />
       </div>
       {error ? (
-        <p className="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700">
+        <p
+          role="alert"
+          className="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700"
+        >
           {error}
         </p>
       ) : null}
       <button
         type="submit"
         disabled={loading}
-        className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-70"
+        className="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-brand-600 px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-70"
       >
         {loading ? "Signing in..." : "Sign in"}
       </button>

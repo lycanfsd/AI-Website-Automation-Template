@@ -31,7 +31,7 @@ export function AdminPageHeader({
       <form action="/api/admin-auth/logout" method="post" className="shrink-0">
         <button
           type="submit"
-          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm font-semibold text-ink transition hover:border-brand-600 hover:text-brand-700"
+          className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-zinc-300 bg-white px-4 py-3 text-sm font-semibold text-ink transition hover:border-brand-600 hover:text-brand-700 sm:w-auto"
         >
           <LogOut aria-hidden="true" className="size-4" />
           Log out

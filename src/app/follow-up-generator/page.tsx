@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function LeadFollowUpPage() {
   return (
     <>
-      <section className="bg-zinc-50 px-4 py-16 sm:px-6 lg:px-8">
+      <section className="bg-zinc-50 px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
         <AdminPageHeader
           eyebrow="AI-assisted"
           title="Lead follow-up generator"

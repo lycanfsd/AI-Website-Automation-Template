@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <section className="bg-zinc-50 px-4 py-16 sm:px-6 lg:px-8">
+      <section className="bg-zinc-50 px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <SectionHeading
             eyebrow="Booking"
@@ -27,7 +27,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="px-4 py-16 sm:px-6 lg:px-8">
+      <section className="px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
             <h2 className="text-2xl font-semibold text-ink">Contact details</h2>
@@ -35,21 +35,35 @@ export default function ContactPage() {
               {[
                 { label: siteConfig.phone, href: `tel:${siteConfig.phone}`, icon: Phone },
                 { label: siteConfig.email, href: `mailto:${siteConfig.email}`, icon: Mail },
-                { label: siteConfig.address, href: "#", icon: MapPin },
-                { label: siteConfig.hours, href: "#", icon: Clock3 },
+                { label: siteConfig.address, icon: MapPin },
+                { label: siteConfig.hours, icon: Clock3 },
               ].map((item) => {
                 const Icon = item.icon;
-                return (
+
+                const content = (
+                  <>
+                    <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-brand-50 text-brand-700">
+                      <Icon aria-hidden="true" className="size-5" />
+                    </span>
+                    <span className="min-w-0 break-words">{item.label}</span>
+                  </>
+                );
+
+                return item.href ? (
                   <a
                     key={item.label}
                     href={item.href}
-                    className="flex items-center gap-3 rounded-lg border border-zinc-200 bg-white p-4 text-sm font-medium text-zinc-700 shadow-soft"
+                    className="flex min-h-16 min-w-0 items-center gap-3 rounded-lg border border-zinc-200 bg-white p-4 text-sm font-medium text-zinc-700 shadow-soft"
                   >
-                    <span className="grid size-10 place-items-center rounded-lg bg-brand-50 text-brand-700">
-                      <Icon aria-hidden="true" className="size-5" />
-                    </span>
-                    {item.label}
+                    {content}
                   </a>
+                ) : (
+                  <div
+                    key={item.label}
+                    className="flex min-h-16 min-w-0 items-center gap-3 rounded-lg border border-zinc-200 bg-white p-4 text-sm font-medium text-zinc-700 shadow-soft"
+                  >
+                    {content}
+                  </div>
                 );
               })}
             </div>

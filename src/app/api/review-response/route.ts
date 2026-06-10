@@ -3,8 +3,10 @@ import {
   validateReviewResponsePayload,
   type ValidatedReviewResponseInput,
 } from "@/lib/review-response-validation";
+import { isRequestBodyTooLarge } from "@/lib/request-limits";
 
 export const runtime = "nodejs";
+const maxReviewRequestBytes = 8_000;
 
 type OpenAIErrorResponse = {
   error?: {
@@ -120,6 +122,13 @@ function getSafeOpenAIError(data: OpenAIErrorResponse) {
 
 export async function POST(request: NextRequest) {
   let payload: unknown;
+
+  if (isRequestBodyTooLarge(request, maxReviewRequestBytes)) {
+    return NextResponse.json(
+      { error: "Review request is too large. Please shorten the review text." },
+      { status: 413 },
+    );
+  }
 
   try {
     payload = await request.json();

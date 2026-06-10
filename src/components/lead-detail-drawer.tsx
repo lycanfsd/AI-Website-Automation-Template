@@ -3,6 +3,7 @@
 import { LoaderCircle, Mail, Phone, Save, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
+  adminLeadNotesMaxCharacters,
   formatLeadDate,
   leadStatusOptions,
   type LeadRecord,
@@ -40,20 +41,28 @@ export function LeadDetailDrawer({
   }
 
   return (
-    <div className="fixed inset-0 z-50 bg-ink/50 px-4 py-6 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 bg-ink/50 px-3 py-4 backdrop-blur-sm sm:px-4 sm:py-6">
       <button
         type="button"
         aria-label="Close lead details"
         className="absolute inset-0 size-full cursor-default"
         onClick={onClose}
       />
-      <aside className="relative ml-auto flex h-full w-full max-w-xl flex-col overflow-hidden rounded-lg bg-white shadow-soft">
+      <aside
+        aria-labelledby="lead-detail-title"
+        aria-modal="true"
+        role="dialog"
+        className="relative ml-auto flex h-full w-full max-w-xl flex-col overflow-hidden rounded-lg bg-white shadow-soft"
+      >
         <div className="flex items-start justify-between gap-4 border-b border-zinc-200 p-5">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.16em] text-copper-600">
               Lead details
             </p>
-            <h2 className="mt-2 text-2xl font-semibold text-ink">
+            <h2
+              id="lead-detail-title"
+              className="mt-2 text-2xl font-semibold text-ink"
+            >
               {lead.full_name}
             </h2>
             <p className="mt-1 text-sm text-zinc-500">
@@ -63,7 +72,7 @@ export function LeadDetailDrawer({
           <button
             type="button"
             onClick={onClose}
-            className="grid size-10 place-items-center rounded-lg border border-zinc-200 text-zinc-500 transition hover:bg-zinc-50 hover:text-ink"
+            className="grid size-11 shrink-0 place-items-center rounded-lg border border-zinc-200 text-zinc-500 transition hover:bg-zinc-50 hover:text-ink"
             aria-label="Close"
           >
             <X aria-hidden="true" className="size-5" />
@@ -81,17 +90,17 @@ export function LeadDetailDrawer({
           <div className="grid gap-3 sm:grid-cols-2">
             <a
               href={`mailto:${lead.email}`}
-              className="flex items-center gap-3 rounded-lg border border-zinc-200 p-4 text-sm font-medium text-zinc-700 hover:border-brand-600"
+              className="flex min-w-0 items-center gap-3 rounded-lg border border-zinc-200 p-4 text-sm font-medium text-zinc-700 hover:border-brand-600"
             >
-              <Mail aria-hidden="true" className="size-4 text-brand-700" />
-              {lead.email}
+              <Mail aria-hidden="true" className="size-4 shrink-0 text-brand-700" />
+              <span className="min-w-0 break-all">{lead.email}</span>
             </a>
             <a
               href={`tel:${lead.phone}`}
-              className="flex items-center gap-3 rounded-lg border border-zinc-200 p-4 text-sm font-medium text-zinc-700 hover:border-brand-600"
+              className="flex min-w-0 items-center gap-3 rounded-lg border border-zinc-200 p-4 text-sm font-medium text-zinc-700 hover:border-brand-600"
             >
-              <Phone aria-hidden="true" className="size-4 text-brand-700" />
-              {lead.phone}
+              <Phone aria-hidden="true" className="size-4 shrink-0 text-brand-700" />
+              <span className="min-w-0 break-words">{lead.phone}</span>
             </a>
           </div>
 
@@ -128,11 +137,18 @@ export function LeadDetailDrawer({
                 value={notes}
                 onChange={(event) => setNotes(event.target.value)}
                 placeholder="Add follow-up notes, owner context, or next steps."
+                maxLength={adminLeadNotesMaxCharacters}
               />
+              <span className="text-xs font-normal text-zinc-500">
+                {notes.trim().length}/{adminLeadNotesMaxCharacters}
+              </span>
             </label>
 
             {error ? (
-              <p className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+              <p
+                role="alert"
+                className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
+              >
                 {error}
               </p>
             ) : null}
@@ -144,7 +160,7 @@ export function LeadDetailDrawer({
             type="button"
             disabled={isSaving}
             onClick={() => onSave(lead.id, { status, notes })}
-            className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-70"
+            className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-brand-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-70"
           >
             {isSaving ? (
               <LoaderCircle aria-hidden="true" className="size-4 animate-spin" />
@@ -165,7 +181,7 @@ function DetailRow({ label, value }: { label: string; value: string }) {
       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500">
         {label}
       </p>
-      <p className="mt-1 text-sm leading-6 text-zinc-800">{value}</p>
+      <p className="mt-1 break-words text-sm leading-6 text-zinc-800">{value}</p>
     </div>
   );
 }

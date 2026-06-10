@@ -5,7 +5,7 @@ import { useState } from "react";
 import { siteConfig } from "@/config/site";
 
 const inputClass =
-  "min-h-11 w-full rounded-lg border border-zinc-300 bg-white px-3 text-sm text-ink outline-none transition placeholder:text-zinc-400 focus:border-brand-600 focus:ring-4 focus:ring-brand-100";
+  "min-h-12 w-full rounded-lg border border-zinc-300 bg-white px-3 text-sm text-ink outline-none transition placeholder:text-zinc-400 focus:border-brand-600 focus:ring-4 focus:ring-brand-100";
 
 export function SettingsPreview() {
   const [settings, setSettings] = useState({
@@ -62,7 +62,7 @@ export function SettingsPreview() {
           </label>
           <button
             type="submit"
-            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-brand-600 px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-700"
+            className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-brand-600 px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-700 sm:w-auto"
           >
             <Save aria-hidden="true" className="size-4" />
             Save demo settings
@@ -92,7 +92,7 @@ export function SettingsPreview() {
         </div>
         <button
           type="button"
-          className="mt-8 inline-flex min-h-11 items-center rounded-full bg-white px-5 text-sm font-semibold text-ink"
+          className="mt-8 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-white px-5 text-sm font-semibold text-ink sm:w-auto"
         >
           {settings.primaryCta}
         </button>

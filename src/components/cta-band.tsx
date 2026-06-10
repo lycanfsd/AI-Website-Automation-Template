@@ -20,13 +20,20 @@ export function CtaBand() {
           </p>
         </div>
         <div className="flex flex-col gap-3 sm:flex-row">
-          <ButtonLink href="/contact" className="bg-white text-ink hover:bg-brand-50">
+          <ButtonLink
+            href="/contact"
+            className="w-full bg-white text-ink hover:bg-brand-50 sm:w-auto"
+          >
             <span className="inline-flex items-center gap-2">
               <CalendarCheck aria-hidden="true" className="size-4" />
               {siteConfig.primaryCta}
             </span>
           </ButtonLink>
-          <ButtonLink href="/dashboard" variant="secondary" className="border-white/40 bg-transparent text-white hover:border-white hover:text-white">
+          <ButtonLink
+            href="/dashboard"
+            variant="secondary"
+            className="w-full border-white/40 bg-transparent text-white hover:border-white hover:text-white sm:w-auto"
+          >
             View dashboard
           </ButtonLink>
         </div>

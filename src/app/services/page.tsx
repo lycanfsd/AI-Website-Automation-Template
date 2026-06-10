@@ -36,7 +36,7 @@ export default function ServicesPage() {
           className="object-cover object-center opacity-40"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/88 to-ink/45" />
-        <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8 lg:py-24">
+        <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 sm:py-16 lg:grid-cols-[0.95fr_1.05fr] lg:px-8 lg:py-24">
           <div className="min-w-0 max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-100">
               {siteConfig.businessName} services
@@ -50,8 +50,14 @@ export default function ServicesPage() {
               real life.
             </p>
             <div className="mt-8 flex max-w-[21rem] flex-col gap-3 sm:max-w-none sm:flex-row">
-              <ButtonLink href="/contact">{siteConfig.primaryCta}</ButtonLink>
-              <ButtonLink href="#service-options" variant="secondary">
+              <ButtonLink href="/contact" className="w-full sm:w-auto">
+                {siteConfig.primaryCta}
+              </ButtonLink>
+              <ButtonLink
+                href="#service-options"
+                variant="secondary"
+                className="w-full sm:w-auto"
+              >
                 Compare services
               </ButtonLink>
             </div>
@@ -90,7 +96,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section id="service-options" className="px-4 py-16 sm:px-6 lg:px-8">
+      <section id="service-options" className="px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <SectionHeading
             eyebrow="Service options"
@@ -114,7 +120,7 @@ export default function ServicesPage() {
                     <Link
                       href="/contact"
                       aria-label={`Ask about ${service.title}`}
-                      className="grid size-10 place-items-center rounded-full border border-zinc-200 text-zinc-500 transition hover:border-brand-600 hover:text-brand-700"
+                      className="grid size-11 shrink-0 place-items-center rounded-full border border-zinc-200 text-zinc-500 transition hover:border-brand-600 hover:text-brand-700"
                     >
                       <ArrowRight aria-hidden="true" className="size-4" />
                     </Link>
@@ -139,7 +145,11 @@ export default function ServicesPage() {
                       </li>
                     ))}
                   </ul>
-                  <ButtonLink href="/contact" variant="secondary" className="mt-6">
+                  <ButtonLink
+                    href="/contact"
+                    variant="secondary"
+                    className="mt-6 w-full sm:w-auto"
+                  >
                     Book a consult
                   </ButtonLink>
                 </article>
@@ -149,7 +159,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="border-y border-zinc-200 bg-zinc-50 px-4 py-16 sm:px-6 lg:px-8">
+      <section className="border-y border-zinc-200 bg-zinc-50 px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
           <SectionHeading
             eyebrow="Who this is for"
@@ -174,7 +184,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="px-4 py-16 sm:px-6 lg:px-8">
+      <section className="px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <SectionHeading
             eyebrow="How it works"
@@ -210,7 +220,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="border-y border-zinc-200 bg-zinc-50 px-4 py-16 sm:px-6 lg:px-8">
+      <section className="border-y border-zinc-200 bg-zinc-50 px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <SectionHeading
             eyebrow="FAQ"
@@ -224,7 +234,7 @@ export default function ServicesPage() {
                 key={faq.question}
                 className="group rounded-lg border border-zinc-200 bg-white p-5 shadow-soft"
               >
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-ink">
+                <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-ink">
                   <span className="flex items-center gap-3">
                     <HelpCircle
                       aria-hidden="true"
@@ -245,7 +255,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="bg-brand-900 px-4 py-16 text-white sm:px-6 lg:px-8">
+      <section className="bg-brand-900 px-4 py-14 text-white sm:px-6 sm:py-16 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.16em] text-brand-100">
@@ -261,12 +271,15 @@ export default function ServicesPage() {
             </p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <ButtonLink href="/contact" className="bg-white text-ink hover:bg-brand-50">
+            <ButtonLink
+              href="/contact"
+              className="w-full bg-white text-ink hover:bg-brand-50 sm:w-auto"
+            >
               {siteConfig.primaryCta}
             </ButtonLink>
             <a
               href={`tel:${siteConfig.phone}`}
-              className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/30 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10"
+              className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
             >
               Call {siteConfig.phone}
             </a>

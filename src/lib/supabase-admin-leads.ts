@@ -13,6 +13,7 @@ class SupabaseAdminLeadError extends Error {
   constructor(
     message: string,
     public status = 500,
+    public exposeToClient = false,
   ) {
     super(message);
   }
@@ -26,6 +27,7 @@ function getSupabaseConfig() {
     throw new SupabaseAdminLeadError(
       "Lead dashboard is not configured. Add SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY on the server.",
       503,
+      true,
     );
   }
 
@@ -135,12 +137,19 @@ export function getAdminLeadError(error: unknown) {
   if (error instanceof SupabaseAdminLeadError) {
     return {
       status: error.status,
-      message: error.message,
+      message: error.exposeToClient
+        ? error.message
+        : "Unable to load leads right now.",
+      logMessage: error.message,
     };
   }
 
   return {
     status: 500,
     message: "Unable to load leads right now.",
+    logMessage:
+      error instanceof Error
+        ? `${error.name}: ${error.message}`
+        : "Unknown admin lead error.",
   };
 }

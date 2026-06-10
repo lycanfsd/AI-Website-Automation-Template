@@ -24,7 +24,12 @@ export function isAdminPasswordConfigured() {
 
 export function isAdminPasswordMatch(password: string) {
   const configuredPassword = process.env.ADMIN_PASSWORD?.trim();
-  return Boolean(configuredPassword) && password === configuredPassword;
+
+  if (!configuredPassword || !password) {
+    return false;
+  }
+
+  return constantTimeEqual(password, configuredPassword);
 }
 
 export function getAdminCookieOptions() {

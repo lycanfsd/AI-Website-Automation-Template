@@ -43,7 +43,7 @@ export default function HomePage() {
           className="object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/84 to-ink/18" />
-        <div className="relative mx-auto grid min-h-[84svh] max-w-7xl items-center gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[1fr_0.74fr] lg:px-8">
+        <div className="relative mx-auto grid min-h-[calc(100svh-4rem)] max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 sm:py-16 lg:grid-cols-[1fr_0.74fr] lg:px-8">
           <div className="max-w-3xl">
             <p className="mb-4 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-brand-100">
               <MapPin aria-hidden="true" className="size-4" />
@@ -57,9 +57,15 @@ export default function HomePage() {
               adults build practical strength, improve mobility, and stay
               consistent with a clear plan from a real local coach.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href="/contact">{siteConfig.primaryCta}</ButtonLink>
-              <ButtonLink href="#book-consult" variant="secondary">
+            <div className="mt-8 flex max-w-[21rem] flex-col gap-3 sm:max-w-none sm:flex-row">
+              <ButtonLink href="/contact" className="w-full sm:w-auto">
+                {siteConfig.primaryCta}
+              </ButtonLink>
+              <ButtonLink
+                href="#book-consult"
+                variant="secondary"
+                className="w-full sm:w-auto"
+              >
                 Ask for plan options
               </ButtonLink>
             </div>
@@ -93,11 +99,11 @@ export default function HomePage() {
             </div>
             <div className="mt-6 rounded-lg bg-white p-4 text-ink">
               <p className="text-sm font-semibold">
-                This week at {siteConfig.businessName}
+                New inquiry workflow
               </p>
-              <p className="mt-2 text-3xl font-semibold">11</p>
+              <p className="mt-2 text-3xl font-semibold">3 steps</p>
               <p className="text-sm text-zinc-600">
-                consults booked from local inquiries
+                capture the lead, review the goal, follow up fast
               </p>
             </div>
           </div>
@@ -117,7 +123,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="px-4 py-16 sm:px-6 lg:px-8">
+      <section className="px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
           <SectionHeading
             eyebrow="Problem and solution"
@@ -147,7 +153,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="services" className="border-y border-zinc-200 bg-zinc-50 px-4 py-16 sm:px-6 lg:px-8">
+      <section id="services" className="border-y border-zinc-200 bg-zinc-50 px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <SectionHeading
             eyebrow="Services"
@@ -174,7 +180,7 @@ export default function HomePage() {
                   </p>
                   <Link
                     href="/contact"
-                    className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand-700"
+                    className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full text-sm font-semibold text-brand-700"
                   >
                     Ask about this service
                     <ArrowRight aria-hidden="true" className="size-4" />
@@ -186,7 +192,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="px-4 py-16 sm:px-6 lg:px-8">
+      <section className="px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <SectionHeading
             eyebrow="Benefits"
@@ -216,7 +222,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-ink px-4 py-16 text-white sm:px-6 lg:px-8">
+      <section className="bg-ink px-4 py-14 text-white sm:px-6 sm:py-16 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
           <div>
             <SectionHeading
@@ -226,12 +232,15 @@ export default function HomePage() {
               tone="light"
             />
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href="/contact" className="bg-white text-ink hover:bg-brand-50">
+              <ButtonLink
+                href="/contact"
+                className="w-full bg-white text-ink hover:bg-brand-50 sm:w-auto"
+              >
                 Schedule the free consult
               </ButtonLink>
               <a
                 href={`tel:${siteConfig.phone}`}
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/30 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
               >
                 <Phone aria-hidden="true" className="size-4" />
                 Call {siteConfig.phone}
@@ -259,7 +268,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="px-4 py-16 sm:px-6 lg:px-8">
+      <section className="px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <SectionHeading
             eyebrow="Reviews"
@@ -298,7 +307,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="border-y border-zinc-200 bg-zinc-50 px-4 py-16 sm:px-6 lg:px-8">
+      <section className="border-y border-zinc-200 bg-zinc-50 px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
           <SectionHeading
             eyebrow="Follow-up and reputation"
@@ -328,7 +337,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="px-4 py-16 sm:px-6 lg:px-8">
+      <section className="px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <SectionHeading
             eyebrow="FAQ"
@@ -342,7 +351,7 @@ export default function HomePage() {
                 key={faq.question}
                 className="group rounded-lg border border-zinc-200 bg-white p-5 shadow-soft"
               >
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-ink">
+                <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-ink">
                   {faq.question}
                   <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-brand-50 text-brand-700 transition group-open:rotate-45">
                     +
@@ -355,7 +364,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="book-consult" className="bg-brand-900 px-4 py-16 text-white sm:px-6 lg:px-8">
+      <section id="book-consult" className="bg-brand-900 px-4 py-14 text-white sm:px-6 sm:py-16 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div>
             <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-brand-100">

@@ -23,6 +23,16 @@ type LeadEmailContext = {
 
 const resendEndpoint = "https://api.resend.com/emails";
 
+class EmailProviderError extends Error {
+  constructor(
+    message: string,
+    public status: number,
+    public providerCode?: string,
+  ) {
+    super(message);
+  }
+}
+
 function getEmailConfig() {
   return {
     apiKey: process.env.RESEND_API_KEY,
@@ -140,22 +150,35 @@ async function sendResendEmail(apiKey: string, payload: ResendEmailPayload) {
   });
 
   if (!response.ok) {
-    let message = response.statusText;
+    let providerCode: string | undefined;
 
     try {
       const error = (await response.json()) as { message?: string; name?: string };
-      message = error.message || error.name || response.statusText;
+      providerCode = error.name;
     } catch {
-      message = response.statusText;
+      providerCode = undefined;
     }
 
-    throw new Error(`Resend email failed with status ${response.status}: ${message}`);
+    throw new EmailProviderError(
+      `Resend email failed with status ${response.status}`,
+      response.status,
+      providerCode,
+    );
   }
 }
 
 function logSafeEmailError(scope: string, error: unknown) {
-  const message = error instanceof Error ? error.message : "Unknown email error";
-  console.error(`Lead email error (${scope})`, message);
+  if (error instanceof EmailProviderError) {
+    console.error(`Lead email error (${scope})`, {
+      status: error.status,
+      providerCode: error.providerCode,
+    });
+    return;
+  }
+
+  console.error(`Lead email error (${scope})`, {
+    name: error instanceof Error ? error.name : "UnknownError",
+  });
 }
 
 export async function sendLeadEmails(

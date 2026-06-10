@@ -7,7 +7,7 @@ A reusable Next.js client template for local fitness and wellness businesses. Th
 - Mobile-first homepage with premium lead-booking positioning
 - Services page
 - Contact and booking form page
-- Admin lead dashboard mockup
+- Admin lead dashboard connected through protected server API routes
 - Review response generator
 - Lead follow-up generator
 - Settings and customization preview
@@ -148,9 +148,11 @@ Post-deployment smoke test:
 Admin and API deployment notes:
 
 - Admin pages are protected by middleware: `/dashboard`, `/review-generator`, `/follow-up-generator`, `/settings`, and legacy admin/tool redirects.
-- Admin API routes and AI generator routes are also protected by middleware.
-- Public lead submission uses `/api/leads`, validates on the server, stores through the Supabase service role key, and does not expose that key to the browser.
+- Admin API routes and AI generator routes are also protected by middleware. The starter login includes a small in-memory failed-attempt throttle, but larger clients should still use proper auth, MFA, audit logs, and role-based access.
+- Public lead submission uses `/api/leads`, validates on the server, rejects oversized requests, stores through the Supabase service role key, and does not expose that key or internal lead IDs to the browser.
 - AI routes call OpenAI from server route handlers only. The browser sends form input to the app API route, not directly to OpenAI.
+- Supabase, Resend, and OpenAI provider errors are logged in server logs with sanitized detail and returned to users as generic messages.
+- If any server secret is ever exposed in client code, logs, screenshots, support tickets, or client-facing docs, rotate it immediately in the provider dashboard and redeploy.
 
 Demo data safety:
 

@@ -25,7 +25,7 @@ export default async function AdminLoginPage({
   const nextPath = getSafeAdminNextPath(params.next);
 
   return (
-    <section className="bg-zinc-50 px-4 py-16 sm:px-6 lg:px-8">
+    <section className="bg-zinc-50 px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
       <div className="mx-auto grid max-w-5xl gap-8 lg:grid-cols-[1fr_24rem] lg:items-center">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.16em] text-brand-700">

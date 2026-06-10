@@ -4,8 +4,10 @@ import {
   validateLeadFollowUpPayload,
   type ValidatedLeadFollowUpInput,
 } from "@/lib/lead-follow-up-validation";
+import { isRequestBodyTooLarge } from "@/lib/request-limits";
 
 export const runtime = "nodejs";
+const maxFollowUpRequestBytes = 10_000;
 
 type OpenAIErrorResponse = {
   error?: {
@@ -126,6 +128,13 @@ function getSafeOpenAIError(data: OpenAIErrorResponse) {
 
 export async function POST(request: NextRequest) {
   let payload: unknown;
+
+  if (isRequestBodyTooLarge(request, maxFollowUpRequestBytes)) {
+    return NextResponse.json(
+      { error: "Follow-up request is too large. Please shorten the lead details." },
+      { status: 413 },
+    );
+  }
 
   try {
     payload = await request.json();

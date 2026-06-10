@@ -146,7 +146,7 @@ export function AdminLeadsDashboard() {
             type="button"
             onClick={() => setStatusFilter(status)}
             className={cx(
-              "rounded-lg border p-4 text-left shadow-soft transition",
+              "min-h-24 rounded-lg border p-4 text-left shadow-soft transition",
               statusFilter === status
                 ? "border-brand-600 bg-brand-50"
                 : "border-zinc-200 bg-white hover:border-brand-600",
@@ -192,7 +192,7 @@ export function AdminLeadsDashboard() {
             <button
               type="button"
               onClick={() => void loadLeads()}
-              className="inline-flex min-h-10 items-center gap-2 rounded-full border border-zinc-300 px-4 text-sm font-semibold text-ink transition hover:border-brand-600"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-zinc-300 px-4 text-sm font-semibold text-ink transition hover:border-brand-600"
             >
               <RefreshCw aria-hidden="true" className="size-4" />
               Refresh
@@ -261,7 +261,7 @@ export function AdminLeadsDashboard() {
                       <button
                         type="button"
                         onClick={() => setSelectedLead(lead)}
-                        className="rounded-full border border-zinc-300 px-4 py-2 text-sm font-semibold text-ink transition hover:border-brand-600"
+                        className="inline-flex min-h-11 items-center rounded-full border border-zinc-300 px-4 py-2 text-sm font-semibold text-ink transition hover:border-brand-600"
                       >
                         View
                       </button>
@@ -276,12 +276,14 @@ export function AdminLeadsDashboard() {
             {filteredLeads.map((lead) => (
               <article
                 key={lead.id}
-                className="rounded-lg border border-zinc-200 bg-white p-5 shadow-soft"
+                className="min-w-0 rounded-lg border border-zinc-200 bg-white p-5 shadow-soft"
               >
                 <div className="flex items-start justify-between gap-4">
-                  <div>
+                  <div className="min-w-0">
                     <h2 className="font-semibold text-ink">{lead.full_name}</h2>
-                    <p className="mt-1 text-sm text-zinc-500">{lead.email}</p>
+                    <p className="mt-1 break-all text-sm text-zinc-500">
+                      {lead.email}
+                    </p>
                   </div>
                   <LeadStatusBadge status={lead.status} />
                 </div>
@@ -298,7 +300,7 @@ export function AdminLeadsDashboard() {
                 <button
                   type="button"
                   onClick={() => setSelectedLead(lead)}
-                  className="mt-5 inline-flex min-h-10 w-full items-center justify-center rounded-full border border-zinc-300 px-4 text-sm font-semibold text-ink"
+                  className="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-full border border-zinc-300 px-4 text-sm font-semibold text-ink"
                 >
                   View details
                 </button>
@@ -336,7 +338,7 @@ function FilterButton({
       type="button"
       onClick={onClick}
       className={cx(
-        "min-h-10 rounded-full px-4 text-sm font-semibold transition",
+        "min-h-11 rounded-full px-4 text-sm font-semibold transition",
         active
           ? "bg-brand-600 text-white"
           : "border border-zinc-300 text-ink hover:border-brand-600",

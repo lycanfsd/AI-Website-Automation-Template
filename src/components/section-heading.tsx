@@ -43,8 +43,8 @@ export function SectionHeading({
       <HeadingTag
         className={
           tone === "light"
-            ? "text-balance text-3xl font-semibold tracking-normal text-white sm:text-4xl"
-            : "text-balance text-3xl font-semibold tracking-normal text-ink sm:text-4xl"
+            ? "text-balance text-3xl font-semibold leading-tight tracking-normal text-white sm:text-4xl"
+            : "text-balance text-3xl font-semibold leading-tight tracking-normal text-ink sm:text-4xl"
         }
       >
         {title}

@@ -1,4 +1,5 @@
 export const leadStatuses = ["new", "contacted", "booked", "closed", "lost"] as const;
+export const adminLeadNotesMaxCharacters = 2500;
 
 export type LeadStatus = (typeof leadStatuses)[number];
 

@@ -2,12 +2,24 @@ import { NextResponse } from "next/server";
 import { siteConfig } from "@/config/site";
 import { sendLeadEmails } from "@/lib/lead-email";
 import { validateLeadSubmission } from "@/lib/lead-validation";
+import { isRequestBodyTooLarge } from "@/lib/request-limits";
 import { getLeadStorageError, saveLeadToSupabase } from "@/lib/supabase-leads";
 
 export const runtime = "nodejs";
+const maxLeadRequestBytes = 12_000;
 
 export async function POST(request: Request) {
   let body: unknown;
+
+  if (isRequestBodyTooLarge(request, maxLeadRequestBytes)) {
+    return NextResponse.json(
+      {
+        ok: false,
+        errors: { form: "Submission is too large. Please shorten your message." },
+      },
+      { status: 413 },
+    );
+  }
 
   try {
     body = await request.json();
@@ -57,12 +69,14 @@ export async function POST(request: Request) {
       message: result.duplicate
         ? "Thanks. Your consultation request has already been received."
         : `Thanks. Your consultation request has been received, and ${siteConfig.businessName} will follow up soon.`,
-      leadId: result.lead.id,
     });
   } catch (error) {
     const storageError = getLeadStorageError(error);
 
-    console.error("Lead storage error", storageError.message);
+    console.error("Lead storage error", {
+      status: storageError.status,
+      message: storageError.logMessage,
+    });
 
     return NextResponse.json(
       {

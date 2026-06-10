@@ -17,16 +17,6 @@ create table if not exists public.leads (
   source_page text not null default 'contact',
   status text not null default 'new',
   notes text,
-  constraint leads_preferred_service_check check (
-    preferred_service in (
-      'Personal Training',
-      'Online Coaching',
-      'Nutrition Coaching',
-      'Transformation Program',
-      'General Consultation',
-      'Other'
-    )
-  ),
   constraint leads_timeline_check check (
     timeline in ('ASAP', 'This week', 'This month', 'Just researching')
   ),
@@ -34,6 +24,9 @@ create table if not exists public.leads (
     status in ('new', 'contacted', 'booked', 'closed', 'lost')
   )
 );
+
+alter table public.leads
+  drop constraint if exists leads_preferred_service_check;
 
 alter table public.leads
   drop constraint if exists leads_status_check;

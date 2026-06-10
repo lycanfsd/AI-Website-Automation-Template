@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone } from "lucide-react";
-import { marketingNav, siteConfig, socialLinks, toolNav } from "@/config/site";
+import { marketingNav, siteConfig, socialLinks } from "@/config/site";
 
 const socialIcons = {
   Instagram,
@@ -14,21 +14,21 @@ export function SiteFooter() {
     <footer className="border-t border-zinc-200 bg-ink text-white">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.2fr_0.8fr_0.8fr] lg:px-8">
         <div>
-          <div className="flex items-center gap-3">
+          <div className="flex min-w-0 items-center gap-3">
             {siteConfig.logoPath ? (
               <Image
                 src={siteConfig.logoPath}
                 alt={`${siteConfig.businessName} logo`}
                 width={40}
                 height={40}
-                className="size-10 rounded-lg object-contain"
+                className="size-10 shrink-0 rounded-lg object-contain"
               />
             ) : (
-              <span className="grid size-10 place-items-center rounded-lg bg-white text-sm font-bold text-ink">
+              <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-white text-sm font-bold text-ink">
                 {siteConfig.logoText}
               </span>
             )}
-            <div>
+            <div className="min-w-0">
               <p className="font-semibold">{siteConfig.businessName}</p>
               <p className="text-sm text-zinc-300">Powered by ClientFlow AI</p>
             </div>
@@ -59,7 +59,7 @@ export function SiteFooter() {
             Navigate
           </p>
           <div className="mt-4 grid gap-3 text-sm">
-            {[...marketingNav, ...toolNav].map((item) => (
+            {marketingNav.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -76,17 +76,17 @@ export function SiteFooter() {
             Contact
           </p>
           <div className="mt-4 grid gap-3 text-sm text-zinc-300">
-            <a className="flex items-center gap-2 hover:text-white" href={`tel:${siteConfig.phone}`}>
-              <Phone aria-hidden="true" className="size-4" />
-              {siteConfig.phone}
+            <a className="flex min-w-0 items-center gap-2 hover:text-white" href={`tel:${siteConfig.phone}`}>
+              <Phone aria-hidden="true" className="size-4 shrink-0" />
+              <span className="min-w-0 break-words">{siteConfig.phone}</span>
             </a>
-            <a className="flex items-center gap-2 hover:text-white" href={`mailto:${siteConfig.email}`}>
-              <Mail aria-hidden="true" className="size-4" />
-              {siteConfig.email}
+            <a className="flex min-w-0 items-center gap-2 hover:text-white" href={`mailto:${siteConfig.email}`}>
+              <Mail aria-hidden="true" className="size-4 shrink-0" />
+              <span className="min-w-0 break-all">{siteConfig.email}</span>
             </a>
-            <p className="flex items-center gap-2">
-              <MapPin aria-hidden="true" className="size-4" />
-              {siteConfig.address}
+            <p className="flex min-w-0 items-center gap-2">
+              <MapPin aria-hidden="true" className="size-4 shrink-0" />
+              <span className="min-w-0 break-words">{siteConfig.address}</span>
             </p>
           </div>
         </div>

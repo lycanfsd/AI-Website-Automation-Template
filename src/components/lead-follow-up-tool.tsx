@@ -21,7 +21,7 @@ import {
 import { cx } from "@/lib/utils";
 
 const inputClass =
-  "min-h-11 w-full rounded-lg border border-zinc-300 bg-white px-3 text-sm text-ink outline-none transition placeholder:text-zinc-400 focus:border-brand-600 focus:ring-4 focus:ring-brand-100";
+  "min-h-12 w-full rounded-lg border border-zinc-300 bg-white px-3 text-sm text-ink outline-none transition placeholder:text-zinc-400 focus:border-brand-600 focus:ring-4 focus:ring-brand-100";
 
 const textareaClass =
   "w-full rounded-lg border border-zinc-300 bg-white px-3 py-3 text-sm leading-6 text-ink outline-none transition placeholder:text-zinc-400 focus:border-brand-600 focus:ring-4 focus:ring-brand-100";
@@ -275,7 +275,10 @@ export function LeadFollowUpTool() {
           </label>
 
           {error ? (
-            <p className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+            <p
+              role="alert"
+              className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
+            >
               {error}
             </p>
           ) : null}
@@ -284,7 +287,7 @@ export function LeadFollowUpTool() {
             type="button"
             onClick={buildMessage}
             disabled={loading}
-            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-brand-600 px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-70"
+            className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-brand-600 px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
           >
             <WandSparkles aria-hidden="true" className="size-4" />
             {loading ? "Generating..." : "Generate follow-up"}
@@ -309,7 +312,7 @@ export function LeadFollowUpTool() {
               type="button"
               onClick={copyOutput}
               disabled={!output.trim()}
-              className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-white/20 px-4 text-sm font-semibold text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-white/20 px-4 text-sm font-semibold text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
             >
               <Clipboard aria-hidden="true" className="size-4" />
               {copied ? "Copied" : "Copy"}
@@ -318,7 +321,7 @@ export function LeadFollowUpTool() {
               type="button"
               onClick={buildMessage}
               disabled={loading || (!goal.trim() && !leadMessage.trim())}
-              className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-white/20 px-4 text-sm font-semibold text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-white/20 px-4 text-sm font-semibold text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
             >
               <RefreshCw aria-hidden="true" className="size-4" />
               Regenerate

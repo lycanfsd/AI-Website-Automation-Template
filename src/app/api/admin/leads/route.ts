@@ -12,7 +12,10 @@ export async function GET() {
   } catch (error) {
     const adminError = getAdminLeadError(error);
 
-    console.error("Admin leads fetch error", adminError.message);
+    console.error("Admin leads fetch error", {
+      status: adminError.status,
+      message: adminError.logMessage,
+    });
 
     return NextResponse.json(
       {
