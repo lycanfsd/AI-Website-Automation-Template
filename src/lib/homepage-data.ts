@@ -11,11 +11,12 @@ import {
   Star,
   TrendingUp,
 } from "lucide-react";
+import { clientConfig } from "@/config/client";
 
 // TODO: Customize these homepage sections for each client's offer, audience, and service model.
 export const trustIndicators = [
-  { label: "Austin-based coaching studio", icon: MapPin },
-  { label: "Free 20-minute consult", icon: CalendarCheck },
+  { label: `${clientConfig.location}-based coaching studio`, icon: MapPin },
+  { label: clientConfig.offer, icon: CalendarCheck },
   { label: "Personal plan before you commit", icon: ShieldCheck },
 ];
 
@@ -30,7 +31,7 @@ export const problemSolution = [
   {
     problem: "You are busy, inconsistent, and tired of guessing what to do next.",
     solution:
-      "PeakForm starts with a consult, then maps strength, mobility, and habit work around your week.",
+      `${clientConfig.businessName} starts with a consult, then maps strength, mobility, and habit work around your week.`,
   },
   {
     problem: "Big gyms can feel crowded, rushed, or impersonal.",
@@ -89,26 +90,7 @@ export const consultationSteps = [
   },
 ];
 
-export const testimonials = [
-  {
-    quote:
-      "PeakForm helped me rebuild consistency without feeling overwhelmed. The consult alone gave me more clarity than months of trying random plans.",
-    name: "Maya R.",
-    detail: "Strength coaching client",
-  },
-  {
-    quote:
-      "The coaching feels personal and precise. I know what to do, why it matters, and how to fit it into a normal work week.",
-    name: "Chris M.",
-    detail: "Mobility and recovery client",
-  },
-  {
-    quote:
-      "I booked after one conversation because the plan was realistic. No pressure, just a smart path forward.",
-    name: "Elena P.",
-    detail: "Nutrition habits client",
-  },
-];
+export const testimonials = clientConfig.testimonials;
 
 export const aiReputationBenefits = [
   {
@@ -120,7 +102,7 @@ export const aiReputationBenefits = [
   {
     title: "Follow-up stays personal",
     description:
-      "Drafted SMS and email replies use the lead's goal, service interest, and booking stage.",
+      "Drafted email, SMS, and DM replies use the lead's goal, service interest, timeline, and message.",
     icon: MessageSquareText,
   },
   {
@@ -137,28 +119,7 @@ export const aiReputationBenefits = [
   },
 ];
 
-export const faqs = [
-  {
-    question: "Is the consultation really free?",
-    answer:
-      "Yes. The first consult is a short fit assessment so you can understand the recommended service before choosing a plan.",
-  },
-  {
-    question: "Do I need to be in shape before starting?",
-    answer:
-      "No. PeakForm adapts coaching to your current ability, comfort level, and training history.",
-  },
-  {
-    question: "What happens after I submit the form?",
-    answer:
-      "The team reviews your goals and follows up with available consult times, usually within one business day.",
-  },
-  {
-    question: "Can I train if I have an old injury or limitation?",
-    answer:
-      "Tell the team before booking so the consult can focus on appropriate movement, comfort, and whether another provider should be involved.",
-  },
-];
+export const faqs = clientConfig.faqs;
 
 export const conversionHighlights = [
   "No-pressure fit assessment",

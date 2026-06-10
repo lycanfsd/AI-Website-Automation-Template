@@ -1,4 +1,5 @@
 import type { ValidLeadSubmission } from "@/lib/lead-validation";
+import { siteConfig } from "@/config/site";
 
 type EmailSendResult = {
   ownerEmailSent: boolean;
@@ -62,7 +63,7 @@ function buildOwnerEmail({ lead, submittedAt, leadId }: LeadEmailContext) {
   ];
 
   const text = [
-    "New lead from PeakForm Coaching",
+    `New lead from ${siteConfig.businessName}`,
     "",
     ...rows.map(([label, value]) => `${label}: ${value}`),
     "",
@@ -82,7 +83,7 @@ function buildOwnerEmail({ lead, submittedAt, leadId }: LeadEmailContext) {
 
   const html = `
     <div style="font-family: Arial, sans-serif; color: #17211d; line-height: 1.6;">
-      <h1 style="font-size: 24px; margin: 0 0 8px;">New lead from PeakForm Coaching</h1>
+      <h1 style="font-size: 24px; margin: 0 0 8px;">New lead from ${escapeHtml(siteConfig.businessName)}</h1>
       <p style="margin: 0 0 20px; color: #52525b;">A new consultation request was saved to Supabase.</p>
       <table style="border-collapse: collapse; width: 100%; max-width: 680px; border: 1px solid #e5e7eb;">
         ${htmlRows}
@@ -101,27 +102,27 @@ function buildConfirmationEmail({ lead }: LeadEmailContext) {
   const text = [
     `Hi ${lead.fullName},`,
     "",
-    "Thanks for reaching out to PeakForm Coaching. Your inquiry has been received, and the team will review your goals and follow up with the best next step.",
+    `Thanks for reaching out to ${siteConfig.businessName}. Your inquiry has been received, and the team will review your goals and follow up with the best next step.`,
     "",
     `Preferred service: ${lead.preferredService}`,
     `Timeline: ${lead.timelineToStart}`,
     "",
     "Talk soon,",
-    "PeakForm Coaching",
+    siteConfig.businessName,
   ].join("\n");
 
   const html = `
     <div style="font-family: Arial, sans-serif; color: #17211d; line-height: 1.6;">
       <h1 style="font-size: 22px; margin: 0 0 12px;">We received your inquiry</h1>
       <p>Hi ${escapeHtml(lead.fullName)},</p>
-      <p>Thanks for reaching out to PeakForm Coaching. Your inquiry has been received, and the team will review your goals and follow up with the best next step.</p>
+      <p>Thanks for reaching out to ${escapeHtml(siteConfig.businessName)}. Your inquiry has been received, and the team will review your goals and follow up with the best next step.</p>
       <p><strong>Preferred service:</strong> ${escapeHtml(lead.preferredService)}<br />
       <strong>Timeline:</strong> ${escapeHtml(lead.timelineToStart)}</p>
-      <p>Talk soon,<br />PeakForm Coaching</p>
+      <p>Talk soon,<br />${escapeHtml(siteConfig.businessName)}</p>
     </div>`;
 
   return {
-    subject: "PeakForm Coaching received your inquiry",
+    subject: `${siteConfig.businessName} received your inquiry`,
     text,
     html,
   };

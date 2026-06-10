@@ -1,88 +1,163 @@
-export type ReviewTone = "warm" | "professional" | "celebratory";
-export type FollowUpChannel = "sms" | "email";
-export type FollowUpStage = "new" | "missed" | "post-consult" | "inactive";
+export type ReviewTone =
+  | "warm"
+  | "professional"
+  | "apologetic"
+  | "enthusiastic"
+  | "luxury-premium"
+  | "short-simple";
+export type ReviewBusinessType =
+  | "personal-trainer"
+  | "gym"
+  | "med-spa"
+  | "chiropractor"
+  | "physical-therapy"
+  | "yoga-pilates"
+  | "nutrition-coach"
+  | "other";
+export type FollowUpChannel = "email" | "sms" | "instagram-dm";
+export type FollowUpTone =
+  | "friendly"
+  | "professional"
+  | "motivational"
+  | "premium"
+  | "short-direct";
 
 export function generateReviewResponse({
-  customerName,
   rating,
   review,
-  service,
   tone,
+  businessType,
   businessName,
 }: {
-  customerName: string;
   rating: string;
   review: string;
-  service: string;
   tone: ReviewTone;
+  businessType: ReviewBusinessType;
   businessName: string;
 }) {
-  const name = customerName.trim() || "there";
-  const serviceLine = service.trim()
-    ? ` We are glad the ${service.trim()} experience supported your goals.`
+  const name = businessName.trim() || "our team";
+  const reviewText = review.trim();
+  const reviewSnippet =
+    reviewText.length > 90 ? `${reviewText.slice(0, 87).trim()}...` : reviewText;
+  const detailLine = reviewSnippet
+    ? ` Your note about "${reviewSnippet}" is helpful for our team.`
     : "";
-  const reviewLine = review.trim()
-    ? ` We really appreciate you sharing this feedback: "${review.trim()}"`
-    : "";
+  const numericRating = Number(rating);
+  const isNegative = numericRating <= 3;
+  const businessContext: Record<ReviewBusinessType, string> = {
+    "personal-trainer": "coaching experience",
+    gym: "training experience",
+    "med-spa": "visit",
+    chiropractor: "care experience",
+    "physical-therapy": "therapy experience",
+    "yoga-pilates": "studio experience",
+    "nutrition-coach": "coaching experience",
+    other: "experience",
+  };
+  const context = businessContext[businessType];
 
-  if (Number(rating) <= 3) {
-    return `Hi ${name}, thank you for taking the time to share this with ${businessName}.${reviewLine} We are sorry the experience did not fully meet expectations. Our team would like to understand what happened and make it right. Please reach out directly so we can review this with care.`;
+  if (isNegative) {
+    const opening =
+      tone === "short-simple"
+        ? `Thank you for sharing this feedback with ${name}.`
+        : `Thank you for taking the time to share your feedback with ${name}.`;
+    const middle =
+      tone === "luxury-premium"
+        ? ` We hold ourselves to a high standard and want every ${context} to feel thoughtful, respectful, and well-supported.`
+        : ` We are sorry to hear that your ${context} did not meet expectations.`;
+    const closing =
+      " We would appreciate the opportunity to learn more and discuss this directly. Please contact our team so we can better understand what happened and work toward a thoughtful next step.";
+
+    return `${opening}${detailLine}${middle}${closing}`;
   }
 
-  if (tone === "celebratory") {
-    return `Hi ${name}, this made our day. Thank you for trusting ${businessName} and for sharing such a thoughtful review.${serviceLine} We are cheering you on and look forward to seeing your continued progress.`;
+  if (tone === "short-simple") {
+    return `Thank you for the kind review. We appreciate you choosing ${name} and are glad your ${context} was a positive one.`;
   }
 
   if (tone === "professional") {
-    return `Hi ${name}, thank you for your kind review of ${businessName}.${serviceLine} We appreciate the opportunity to support your wellness goals and look forward to welcoming you back soon.`;
+    return `Thank you for your thoughtful review of ${name}.${detailLine} We appreciate the opportunity to support your health and wellness goals, and we are glad to hear your ${context} was a positive experience.`;
   }
 
-  return `Hi ${name}, thank you so much for the kind words. We are grateful you chose ${businessName}.${serviceLine} It means a lot to know the experience was helpful, and we look forward to supporting your next step.`;
+  if (tone === "apologetic") {
+    return `Thank you for sharing this feedback with ${name}.${detailLine} We are grateful for your kind words and always want every detail of the ${context} to feel supportive, clear, and helpful. We look forward to welcoming you back.`;
+  }
+
+  if (tone === "enthusiastic") {
+    return `This means so much to our team.${detailLine} Thank you for choosing ${name} and for sharing such encouraging feedback. We are thrilled to hear your ${context} felt valuable, and we cannot wait to keep cheering on your progress.`;
+  }
+
+  if (tone === "luxury-premium") {
+    return `Thank you for your generous review of ${name}.${detailLine} We are grateful for the opportunity to provide a thoughtful, personalized ${context}, and we look forward to continuing to support your goals with the same level of care.`;
+  }
+
+  return `Thank you so much for the kind words about ${name}.${detailLine} We are grateful you chose us and are glad your ${context} felt supportive. Your feedback means a lot to our team.`;
 }
 
 export function generateFollowUp({
   leadName,
-  service,
+  preferredService,
   goal,
-  stage,
+  timeline,
+  leadMessage,
+  tone,
   channel,
   businessName,
   bookingUrl,
 }: {
   leadName: string;
-  service: string;
+  preferredService: string;
   goal: string;
-  stage: FollowUpStage;
+  timeline: string;
+  leadMessage: string;
+  tone: FollowUpTone;
   channel: FollowUpChannel;
   businessName: string;
   bookingUrl: string;
 }) {
   const name = leadName.trim() || "there";
-  const serviceText = service.trim() || "coaching";
+  const serviceText = preferredService.trim() || "coaching";
   const goalText = goal.trim()
-    ? ` You mentioned wanting help with ${goal.trim().toLowerCase()}, and that is exactly the kind of plan we can personalize.`
+    ? ` You mentioned wanting help with ${goal.trim().toLowerCase()}.`
+    : "";
+  const timelineText = timeline.trim()
+    ? ` Since your timeline is ${timeline.trim().toLowerCase()}, the best next step is a quick consult so we can understand what you need and see whether we are a good fit.`
+    : " The best next step is a quick consult so we can understand what you need and see whether we are a good fit.";
+  const messageText = leadMessage.trim()
+    ? ` I also saw your note: "${leadMessage.trim()}"`
     : "";
   const linkText = bookingUrl
-    ? ` You can grab a consult time here: ${bookingUrl}`
+    ? ` You can book a time here: ${bookingUrl}`
     : " Reply with a good day and time, and we will help you get scheduled.";
 
-  const openings: Record<FollowUpStage, string> = {
-    new: `Hi ${name}, thanks for reaching out to ${businessName} about ${serviceText}.`,
-    missed: `Hi ${name}, sorry we missed you earlier. This is ${businessName} following up on your interest in ${serviceText}.`,
-    "post-consult": `Hi ${name}, thanks again for connecting with ${businessName} today about ${serviceText}.`,
-    inactive: `Hi ${name}, checking in from ${businessName}. You had asked us about ${serviceText}, and we wanted to make sure you got a clear next step.`,
+  const toneOpenings: Record<FollowUpTone, string> = {
+    friendly: `Hi ${name}, thanks for reaching out to ${businessName} about ${serviceText}.`,
+    professional: `Hi ${name}, thank you for contacting ${businessName} about ${serviceText}.`,
+    motivational: `Hi ${name}, thanks for reaching out to ${businessName}. It is a strong first step to ask about ${serviceText}.`,
+    premium: `Hi ${name}, thank you for your interest in ${businessName}. We would be glad to learn more about what you are looking for with ${serviceText}.`,
+    "short-direct": `Hi ${name}, thanks for reaching out about ${serviceText}.`,
   };
 
-  const closing =
-    stage === "post-consult"
-      ? "If you are ready, we can map out your first week and reserve your spot."
-      : "A quick consult is the easiest way to see whether the fit is right.";
+  const toneClosings: Record<FollowUpTone, string> = {
+    friendly: "We would love to learn a little more and point you toward the right next step.",
+    professional:
+      "We can review your goals, answer questions, and recommend the most appropriate next step.",
+    motivational:
+      "We can help you create a clear, realistic starting point without overcomplicating the process.",
+    premium:
+      "We will keep the conversation thoughtful, personalized, and focused on what makes sense for you.",
+    "short-direct": "A quick consult is the easiest next step.",
+  };
 
-  const message = `${openings[stage]}${goalText} ${closing}${linkText}`;
+  const body = `${toneOpenings[tone]}${goalText}${messageText}${timelineText} ${toneClosings[tone]}${linkText}`;
 
   if (channel === "email") {
-    return `Subject: Your next step with ${businessName}\n\n${message}\n\nBest,\n${businessName}`;
+    return `Subject: Your next step with ${businessName}\n\n${body}\n\nBest,\n${businessName}`;
   }
 
-  return message;
+  if (channel === "instagram-dm") {
+    return `${body}\n\nFeel free to DM us back here with any questions.`;
+  }
+
+  return body;
 }

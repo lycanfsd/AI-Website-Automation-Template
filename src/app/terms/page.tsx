@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
+import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Terms and Disclaimer",
-  description: "Terms and disclaimer template for PeakForm Coaching.",
+  ...createPageMetadata({
+    title: "Terms and Disclaimer",
+    description: `Terms and wellness disclaimer for ${siteConfig.businessName}. Review this page with counsel before client launch.`,
+    path: "/terms",
+  }),
 };
 
 export default function TermsPage() {

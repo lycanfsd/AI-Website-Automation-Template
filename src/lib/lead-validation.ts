@@ -1,11 +1,10 @@
+import { clientConfig } from "@/config/client";
+
 export const preferredServiceOptions = [
-  "Personal Training",
-  "Online Coaching",
-  "Nutrition Coaching",
-  "Transformation Program",
+  ...clientConfig.services.map((service) => service.title),
   "General Consultation",
   "Other",
-] as const;
+] as string[];
 
 export const timelineOptions = [
   "ASAP",
@@ -14,7 +13,7 @@ export const timelineOptions = [
   "Just researching",
 ] as const;
 
-export type PreferredService = (typeof preferredServiceOptions)[number];
+export type PreferredService = string;
 export type TimelineToStart = (typeof timelineOptions)[number];
 
 export type LeadFormData = {

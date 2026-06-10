@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { siteConfig } from "@/config/site";
 import { sendLeadEmails } from "@/lib/lead-email";
 import { validateLeadSubmission } from "@/lib/lead-validation";
 import { getLeadStorageError, saveLeadToSupabase } from "@/lib/supabase-leads";
@@ -53,7 +54,7 @@ export async function POST(request: Request) {
       duplicate: result.duplicate,
       message: result.duplicate
         ? "Thanks. Your consultation request has already been received."
-        : "Thanks. Your consultation request has been received, and PeakForm will follow up soon.",
+        : `Thanks. Your consultation request has been received, and ${siteConfig.businessName} will follow up soon.`,
       leadId: result.lead.id,
     });
   } catch (error) {

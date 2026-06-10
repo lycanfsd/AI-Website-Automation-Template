@@ -1,28 +1,32 @@
+import { clientConfig } from "@/config/client";
+
 export const siteConfig = {
-  // TODO: Replace these defaults for each client deployment.
-  businessName:
-    process.env.NEXT_PUBLIC_CLIENT_BUSINESS_NAME || "PeakForm Coaching",
-  tagline: "Personalized coaching for stronger, healthier weeks.",
-  description:
-    "A premium local coaching studio helping busy adults build strength, improve mobility, and stay consistent with expert guidance.",
-  phone: process.env.NEXT_PUBLIC_CLIENT_PHONE || "(555) 014-2048",
-  email: process.env.NEXT_PUBLIC_CLIENT_EMAIL || "hello@peakform.test",
-  address:
-    process.env.NEXT_PUBLIC_CLIENT_ADDRESS || "418 Summit Ave, Austin, TX",
-  bookingUrl: process.env.NEXT_PUBLIC_BOOKING_URL || "",
-  primaryCta: "Book a free consult",
-  secondaryCta: "View services",
-  serviceArea: "Austin and nearby communities",
-  hours: "Mon-Fri 6am-7pm, Sat 8am-1pm",
-  offer: "Free 20-minute fit assessment for new leads",
+  businessName: clientConfig.businessName,
+  tagline: clientConfig.tagline,
+  industry: clientConfig.industry,
+  location: clientConfig.location,
+  description: clientConfig.seoDescription,
+  phone: clientConfig.phone,
+  email: clientConfig.email,
+  address: clientConfig.address,
+  websiteUrl: clientConfig.websiteUrl,
+  bookingUrl: clientConfig.bookingUrl,
+  logoText: clientConfig.logoText,
+  logoPath: clientConfig.logoPath,
+  primaryCta: clientConfig.primaryCTA,
+  secondaryCta: clientConfig.secondaryCTA,
+  serviceArea: clientConfig.serviceArea,
+  hours: clientConfig.hours,
+  offer: clientConfig.offer,
+  toneStyleSuggestion: clientConfig.toneStyleSuggestion,
+  seoTitle: clientConfig.seoTitle,
+  seoDescription: clientConfig.seoDescription,
 };
 
 export const socialLinks = [
-  // TODO: Replace these demo URLs with each client's real social profiles.
-  { label: "Instagram", href: "https://www.instagram.com/" },
-  { label: "Facebook", href: "https://www.facebook.com/" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/" },
-];
+  { label: "Instagram", href: clientConfig.instagramUrl },
+  { label: "Facebook", href: clientConfig.facebookUrl },
+].filter((item) => item.href);
 
 export const marketingNav = [
   { label: "Home", href: "/" },
@@ -31,8 +35,8 @@ export const marketingNav = [
 ];
 
 export const toolNav = [
-  { label: "Leads", href: "/admin/leads" },
-  { label: "Reviews", href: "/tools/review-response" },
-  { label: "Follow-up", href: "/tools/lead-follow-up" },
+  { label: "Leads", href: "/dashboard" },
+  { label: "Reviews", href: "/review-generator" },
+  { label: "Follow-up", href: "/follow-up-generator" },
   { label: "Settings", href: "/settings" },
 ];

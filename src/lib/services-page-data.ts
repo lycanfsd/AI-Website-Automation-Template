@@ -11,58 +11,15 @@ import {
   Trophy,
   Users,
 } from "lucide-react";
+import { clientConfig } from "@/config/client";
 
 // TODO: Customize these services, outcomes, and FAQs for each client niche.
-export const serviceCards = [
-  {
-    title: "1-on-1 Personal Training",
-    description:
-      "Private coaching for strength, mobility, form, and confidence with sessions tailored to your goals and schedule.",
-    icon: Dumbbell,
-    bestFor: "Clients who want focused coaching and hands-on guidance.",
-    highlights: ["Movement assessment", "Custom session plan", "Progress tracking"],
-  },
-  {
-    title: "Online Coaching",
-    description:
-      "Remote programming, check-ins, and accountability for clients who want expert support without commuting.",
-    icon: Laptop,
-    bestFor: "Busy clients who need structure they can follow anywhere.",
-    highlights: ["Weekly programming", "Video form review", "Messaging support"],
-  },
-  {
-    title: "Nutrition Guidance",
-    description:
-      "Simple habit-based nutrition support built around real preferences, realistic routines, and sustainable consistency.",
-    icon: Apple,
-    bestFor: "Clients who want better energy, habits, and clarity around food.",
-    highlights: ["Habit coaching", "Meal rhythm support", "Practical adjustments"],
-  },
-  {
-    title: "Transformation Program",
-    description:
-      "A focused coaching plan for clients ready to improve strength, habits, body composition, and confidence over time.",
-    icon: Trophy,
-    bestFor: "Clients who want a more structured, goal-driven commitment.",
-    highlights: ["Goal roadmap", "Training and habits", "Regular reviews"],
-  },
-  {
-    title: "Strength & Conditioning",
-    description:
-      "Performance-minded coaching that builds power, conditioning, durability, and smarter movement mechanics.",
-    icon: Activity,
-    bestFor: "Active adults who want to train hard with better structure.",
-    highlights: ["Strength blocks", "Conditioning work", "Recovery planning"],
-  },
-  {
-    title: "Accountability Coaching",
-    description:
-      "Ongoing check-ins and plan adjustments that help you stay consistent when life gets busy.",
-    icon: MessageCircleHeart,
-    bestFor: "Clients who know what to do but need follow-through.",
-    highlights: ["Weekly check-ins", "Plan adjustments", "Momentum tracking"],
-  },
-];
+const serviceIcons = [Dumbbell, Laptop, Apple, Trophy, Activity, MessageCircleHeart];
+
+export const serviceCards = clientConfig.services.map((service, index) => ({
+  ...service,
+  icon: serviceIcons[index] || Dumbbell,
+}));
 
 export const audienceFit = [
   "You want coaching that feels personal, not crowded or rushed.",
@@ -104,7 +61,7 @@ export const servicesFaqs = [
   {
     question: "Which service should I choose first?",
     answer:
-      "Start with the free consultation. PeakForm will recommend the best option based on your goals, schedule, training history, and preferred level of support.",
+      `Start with the free consultation. ${clientConfig.businessName} will recommend the best option based on your goals, schedule, training history, and preferred level of support.`,
   },
   {
     question: "Do I need experience before starting personal training?",
@@ -119,7 +76,7 @@ export const servicesFaqs = [
   {
     question: "Is nutrition guidance a meal plan?",
     answer:
-      "PeakForm uses practical habit guidance by default. A client-specific nutrition scope should be reviewed before launch, especially for licensed or clinical services.",
+      `${clientConfig.businessName} uses practical habit guidance by default. A client-specific nutrition scope should be reviewed before launch, especially for licensed or clinical services.`,
   },
   {
     question: "How soon will someone follow up after I book?",
@@ -130,7 +87,7 @@ export const servicesFaqs = [
 
 export const serviceHeroStats = [
   { value: "20 min", label: "free fit assessment" },
-  { value: "6", label: "coaching paths" },
+  { value: String(clientConfig.services.length), label: "coaching paths" },
   { value: "1:1", label: "personalized next step" },
 ];
 

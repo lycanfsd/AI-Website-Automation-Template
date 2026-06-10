@@ -14,6 +14,7 @@ import {
   type LeadValidationErrors,
   validateLeadSubmission,
 } from "@/lib/lead-validation";
+import { siteConfig } from "@/config/site";
 import { cx } from "@/lib/utils";
 
 const initialFormData: LeadFormData = {
@@ -159,10 +160,10 @@ export function BookingForm({ sourcePage = "contact" }: { sourcePage?: string })
   return (
     <form className="grid gap-4" onSubmit={handleSubmit} noValidate>
       <div className="grid gap-2">
-        <h2 className="text-xl font-semibold text-ink">Book a free consult</h2>
+        <h2 className="text-xl font-semibold text-ink">{siteConfig.primaryCta}</h2>
         <p className="text-sm leading-6 text-zinc-600">
-          Share a few details and PeakForm will follow up with the best next
-          step for your goals.
+          Share a few details and {siteConfig.businessName} will follow up with
+          the best next step for your goals.
         </p>
       </div>
 
@@ -394,7 +395,7 @@ export function BookingForm({ sourcePage = "contact" }: { sourcePage?: string })
         ) : (
           <Send aria-hidden="true" className="size-4" />
         )}
-        {isSubmitting ? "Sending request..." : "Request free consult"}
+        {isSubmitting ? "Sending request..." : siteConfig.primaryCta}
       </button>
 
       <p className="text-xs leading-5 text-zinc-500">

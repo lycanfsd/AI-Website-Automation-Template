@@ -26,7 +26,7 @@ export function CtaBand() {
               {siteConfig.primaryCta}
             </span>
           </ButtonLink>
-          <ButtonLink href="/admin/leads" variant="secondary" className="border-white/40 bg-transparent text-white hover:border-white hover:text-white">
+          <ButtonLink href="/dashboard" variant="secondary" className="border-white/40 bg-transparent text-white hover:border-white hover:text-white">
             View dashboard
           </ButtonLink>
         </div>

@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
+import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description: "Privacy policy template for PeakForm Coaching.",
+  ...createPageMetadata({
+    title: "Privacy Policy",
+    description: `Privacy policy for ${siteConfig.businessName}, including how contact form inquiries and client communications may be handled.`,
+    path: "/privacy",
+  }),
 };
 
 export default function PrivacyPage() {

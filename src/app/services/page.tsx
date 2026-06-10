@@ -5,6 +5,7 @@ import { ArrowRight, CheckCircle2, HelpCircle } from "lucide-react";
 import { ButtonLink } from "@/components/button-link";
 import { SectionHeading } from "@/components/section-heading";
 import { siteConfig } from "@/config/site";
+import { createPageMetadata } from "@/lib/seo";
 import {
   audienceFit,
   serviceCards,
@@ -15,9 +16,11 @@ import {
 } from "@/lib/services-page-data";
 
 export const metadata: Metadata = {
-  title: "Services",
-  description:
-    "Personal training, online coaching, nutrition guidance, transformation programs, strength coaching, and accountability coaching at PeakForm Coaching.",
+  ...createPageMetadata({
+    title: "Services",
+    description: `${siteConfig.businessName} offers ${serviceCards.map((service) => service.title).join(", ")} for ${siteConfig.serviceArea.toLowerCase()}.`,
+    path: "/services",
+  }),
 };
 
 export default function ServicesPage() {
@@ -26,7 +29,7 @@ export default function ServicesPage() {
       <section className="relative isolate overflow-hidden bg-ink text-white">
         <Image
           src="/images/peakform-hero.png"
-          alt="PeakForm coach supporting a client in a modern training studio"
+          alt={`${siteConfig.businessName} coach supporting a client in a modern training studio`}
           fill
           priority
           sizes="100vw"
@@ -36,7 +39,7 @@ export default function ServicesPage() {
         <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8 lg:py-24">
           <div className="min-w-0 max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-100">
-              PeakForm services
+              {siteConfig.businessName} services
             </p>
             <h1 className="mt-4 max-w-[21rem] text-balance text-3xl font-semibold leading-tight tracking-normal sm:max-w-3xl sm:text-6xl">
               Coaching options built around your body, schedule, and next goal.
@@ -116,9 +119,9 @@ export default function ServicesPage() {
                       <ArrowRight aria-hidden="true" className="size-4" />
                     </Link>
                   </div>
-                  <h2 className="mt-6 text-xl font-semibold text-ink">
+                  <h3 className="mt-6 text-xl font-semibold text-ink">
                     {service.title}
-                  </h2>
+                  </h3>
                   <p className="mt-3 text-sm leading-6 text-zinc-600">
                     {service.description}
                   </p>
@@ -150,7 +153,7 @@ export default function ServicesPage() {
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
           <SectionHeading
             eyebrow="Who this is for"
-            title="PeakForm is for people who want practical coaching, not another overwhelming plan."
+            title={`${siteConfig.businessName} is for people who want practical coaching, not another overwhelming plan.`}
             description="The best fit is someone who wants expert support, realistic structure, and a clear next step before committing."
           />
           {/* TODO: Replace these audience-fit bullets with the client's actual ideal customer profile. */}
@@ -252,9 +255,9 @@ export default function ServicesPage() {
               Not sure which service fits? Start with the consult.
             </h2>
             <p className="mt-4 text-base leading-7 text-brand-100">
-              Share your goals, schedule, and training history. PeakForm will
-              help you choose the path that makes the most sense before you
-              commit.
+              Share your goals, schedule, and training history.{" "}
+              {siteConfig.businessName} will help you choose the path that makes
+              the most sense before you commit.
             </p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">

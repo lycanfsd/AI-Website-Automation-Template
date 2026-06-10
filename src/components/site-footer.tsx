@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone } from "lucide-react";
 import { marketingNav, siteConfig, socialLinks, toolNav } from "@/config/site";
@@ -14,17 +15,26 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.2fr_0.8fr_0.8fr] lg:px-8">
         <div>
           <div className="flex items-center gap-3">
-            <span className="grid size-10 place-items-center rounded-lg bg-white text-sm font-bold text-ink">
-              PF
-            </span>
+            {siteConfig.logoPath ? (
+              <Image
+                src={siteConfig.logoPath}
+                alt={`${siteConfig.businessName} logo`}
+                width={40}
+                height={40}
+                className="size-10 rounded-lg object-contain"
+              />
+            ) : (
+              <span className="grid size-10 place-items-center rounded-lg bg-white text-sm font-bold text-ink">
+                {siteConfig.logoText}
+              </span>
+            )}
             <div>
               <p className="font-semibold">{siteConfig.businessName}</p>
               <p className="text-sm text-zinc-300">Powered by ClientFlow AI</p>
             </div>
           </div>
           <p className="mt-5 max-w-md text-sm leading-6 text-zinc-300">
-            Premium local coaching, practical consults, and quick follow-up for
-            Austin-area clients who want a stronger, healthier routine.
+            {siteConfig.description}
           </p>
           <div className="mt-6 flex gap-3">
             {socialLinks.map((item) => {

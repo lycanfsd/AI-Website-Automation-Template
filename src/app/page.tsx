@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { BookingForm } from "@/components/booking-form";
 import { ButtonLink } from "@/components/button-link";
+import { LocalBusinessJsonLd } from "@/components/local-business-json-ld";
 import { SectionHeading } from "@/components/section-heading";
 import { siteConfig } from "@/config/site";
 import { services } from "@/lib/demo-data";
@@ -31,10 +32,11 @@ import {
 export default function HomePage() {
   return (
     <>
+      <LocalBusinessJsonLd />
       <section className="relative isolate overflow-hidden bg-ink text-white">
         <Image
           src="/images/peakform-hero.png"
-          alt="Coach guiding a client through a fitness movement in a modern wellness studio"
+          alt={`${siteConfig.businessName} coach guiding a client through movement in a modern wellness studio serving ${siteConfig.location}`}
           fill
           priority
           sizes="100vw"
@@ -51,9 +53,9 @@ export default function HomePage() {
               Feel stronger, move better, and know exactly what to do next.
             </h1>
             <p className="mt-5 max-w-[21rem] text-pretty text-base leading-7 text-zinc-100 sm:max-w-[34rem] sm:text-xl sm:leading-8">
-              PeakForm Coaching helps Austin-area adults build practical
-              strength, improve mobility, and stay consistent with a clear plan
-              from a real local coach.
+              {siteConfig.businessName} helps {siteConfig.serviceArea.toLowerCase()}{" "}
+              adults build practical strength, improve mobility, and stay
+              consistent with a clear plan from a real local coach.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="/contact">{siteConfig.primaryCta}</ButtonLink>
@@ -90,7 +92,9 @@ export default function HomePage() {
               ))}
             </div>
             <div className="mt-6 rounded-lg bg-white p-4 text-ink">
-              <p className="text-sm font-semibold">This week at PeakForm</p>
+              <p className="text-sm font-semibold">
+                This week at {siteConfig.businessName}
+              </p>
               <p className="mt-2 text-3xl font-semibold">11</p>
               <p className="text-sm text-zinc-600">
                 consults booked from local inquiries
@@ -127,9 +131,9 @@ export default function HomePage() {
                 className="rounded-lg border border-zinc-200 bg-zinc-50 p-5"
               >
                 <p className="text-sm font-semibold text-copper-600">Problem</p>
-                <h2 className="mt-2 text-lg font-semibold text-ink">
+                <h3 className="mt-2 text-lg font-semibold text-ink">
                   {item.problem}
-                </h2>
+                </h3>
                 <p className="mt-4 flex gap-3 text-sm leading-6 text-zinc-700">
                   <CheckCircle2
                     aria-hidden="true"
@@ -187,7 +191,7 @@ export default function HomePage() {
           <SectionHeading
             eyebrow="Benefits"
             title="A premium experience should feel personal before, during, and after the consult."
-            description="PeakForm is positioned around practical outcomes a local client can feel, not vague promises."
+            description={`${siteConfig.businessName} is positioned around practical outcomes a local client can feel, not vague promises.`}
           />
           <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {benefits.map((benefit) => {
@@ -299,7 +303,7 @@ export default function HomePage() {
           <SectionHeading
             eyebrow="Follow-up and reputation"
             title="Behind the scenes, every inquiry and review gets handled faster."
-            description="PeakForm uses ClientFlow AI to keep communication timely, organized, and personal while the coaching team stays in control of each conversation."
+            description={`${siteConfig.businessName} uses ClientFlow AI to keep communication timely, organized, and personal while the team stays in control of each conversation.`}
           />
           <div className="grid gap-4 sm:grid-cols-2">
             {aiReputationBenefits.map((item) => {
@@ -359,12 +363,12 @@ export default function HomePage() {
               Start here
             </p>
             <h2 className="mt-4 text-balance text-3xl font-semibold tracking-normal sm:text-5xl">
-              Book a free consult and leave with a realistic first step.
+              {siteConfig.primaryCta} and leave with a realistic first step.
             </h2>
             <p className="mt-5 max-w-2xl text-base leading-7 text-brand-100">
               Share your goal, preferred schedule, and the type of support you
-              are considering. PeakForm will follow up with available consult
-              times and the best next step for your situation.
+              are considering. {siteConfig.businessName} will follow up with
+              available consult times and the best next step for your situation.
             </p>
             <div className="mt-8 grid gap-3 text-sm text-brand-100 sm:grid-cols-2">
               <p className="flex items-center gap-2">

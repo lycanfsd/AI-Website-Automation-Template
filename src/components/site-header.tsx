@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { CalendarCheck, Menu, X } from "lucide-react";
@@ -17,14 +18,26 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-zinc-200/80 bg-white/92 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-3">
-          <span className="grid size-10 place-items-center rounded-lg bg-ink text-sm font-bold text-white">
-            PF
-          </span>
+          {siteConfig.logoPath ? (
+            <Image
+              src={siteConfig.logoPath}
+              alt={`${siteConfig.businessName} logo`}
+              width={40}
+              height={40}
+              className="size-10 rounded-lg object-contain"
+            />
+          ) : (
+            <span className="grid size-10 place-items-center rounded-lg bg-ink text-sm font-bold text-white">
+              {siteConfig.logoText}
+            </span>
+          )}
           <span className="min-w-0">
             <span className="block truncate text-sm font-semibold text-ink">
               {siteConfig.businessName}
             </span>
-            <span className="block text-xs text-zinc-500">ClientFlow AI</span>
+            <span className="block text-xs text-zinc-500">
+              {siteConfig.tagline}
+            </span>
           </span>
         </Link>
 

@@ -31,9 +31,21 @@ create table if not exists public.leads (
     timeline in ('ASAP', 'This week', 'This month', 'Just researching')
   ),
   constraint leads_status_check check (
-    status in ('new', 'contacted', 'booked', 'won', 'lost')
+    status in ('new', 'contacted', 'booked', 'closed', 'lost')
   )
 );
+
+alter table public.leads
+  drop constraint if exists leads_status_check;
+
+update public.leads
+set status = 'closed'
+where status = 'won';
+
+alter table public.leads
+  add constraint leads_status_check check (
+    status in ('new', 'contacted', 'booked', 'closed', 'lost')
+  );
 
 create index if not exists leads_created_at_idx
   on public.leads (created_at desc);
@@ -50,4 +62,4 @@ comment on table public.leads is
   'Lead capture submissions from ClientFlow AI websites. Configure dashboard access policies before exposing this table to client-side reads.';
 
 comment on column public.leads.status is
-  'Default is new. Update to contacted, booked, won, or lost as the lead moves through the pipeline.';
+  'Default is new. Update to contacted, booked, closed, or lost as the lead moves through the pipeline.';

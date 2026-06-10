@@ -6,51 +6,17 @@ import {
   Sparkles,
   Users,
 } from "lucide-react";
+import { clientConfig } from "@/config/client";
 
-export const services = [
-  {
-    title: "1:1 Strength Coaching",
-    description:
-      "Personal sessions built around goals, movement quality, and weekly accountability.",
-    icon: Activity,
-    accent: "brand",
-  },
-  {
-    title: "Mobility and Recovery",
-    description:
-      "Guided routines that help clients move better, feel better, and stay consistent.",
-    icon: HeartPulse,
-    accent: "copper",
-  },
-  {
-    title: "Small Group Training",
-    description:
-      "High-touch coaching in a focused setting for friends, partners, and small teams.",
-    icon: Users,
-    accent: "brand",
-  },
-  {
-    title: "Nutrition Habits",
-    description:
-      "Simple, sustainable nutrition coaching matched to real schedules and preferences.",
-    icon: NotebookPen,
-    accent: "copper",
-  },
-  {
-    title: "Wellness Check-ins",
-    description:
-      "Weekly review touchpoints that keep goals visible and next steps clear.",
-    icon: MessageCircleHeart,
-    accent: "brand",
-  },
-  {
-    title: "ClientFlow AI Setup",
-    description:
-      "Lead capture, response templates, and review management customized for the business.",
-    icon: Sparkles,
-    accent: "copper",
-  },
-];
+const serviceIcons = [Activity, HeartPulse, Users, NotebookPen, MessageCircleHeart, Sparkles];
+const serviceAccents = ["brand", "copper", "brand", "copper", "brand", "copper"] as const;
+
+export const services = clientConfig.services.map((service, index) => ({
+  title: service.title,
+  description: service.shortDescription,
+  icon: serviceIcons[index] || Activity,
+  accent: serviceAccents[index] || "brand",
+}));
 
 export type LeadStatus = "New" | "Contacted" | "Booked" | "Won";
 

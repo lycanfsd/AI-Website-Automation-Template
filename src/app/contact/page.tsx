@@ -3,10 +3,14 @@ import { Clock3, Mail, MapPin, Phone } from "lucide-react";
 import { BookingForm } from "@/components/booking-form";
 import { SectionHeading } from "@/components/section-heading";
 import { siteConfig } from "@/config/site";
+import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Contact and Booking",
-  description: "Book a free consult with PeakForm Coaching.",
+  ...createPageMetadata({
+    title: "Contact and Booking",
+    description: `${siteConfig.primaryCta} with ${siteConfig.businessName} in ${siteConfig.location}. Contact ${siteConfig.phone} or submit the lead form for local ${siteConfig.industry.toLowerCase()} support.`,
+    path: "/contact",
+  }),
 };
 
 export default function ContactPage() {
@@ -16,6 +20,7 @@ export default function ContactPage() {
         <div className="mx-auto max-w-7xl">
           <SectionHeading
             eyebrow="Booking"
+            as="h1"
             title="Tell us what you want to improve. We will help you choose the first step."
             description={siteConfig.offer}
           />
@@ -50,8 +55,8 @@ export default function ContactPage() {
             </div>
             {/* TODO: Replace demo contact details, office hours, and service area for each client launch. */}
             <p className="mt-6 text-sm leading-6 text-zinc-600">
-              New inquiries are reviewed by the PeakForm team and answered with
-              the best next step for your goals.
+              New inquiries are reviewed by the {siteConfig.businessName} team
+              and answered with the best next step for your goals.
             </p>
           </div>
 
